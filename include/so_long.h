@@ -6,14 +6,15 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:33:37 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:13:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/06/26 16:47:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <libftx/libft.h>
+# include <libft.h>
+# include <mlx.h>
 //# include <unistd.h>
 //# include <stdlib.h>
 
