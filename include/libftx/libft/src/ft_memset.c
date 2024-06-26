@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/10/16 15:21:33 by jrichir           #+#    #+#             */
+/*   Updated: 2023/10/25 17:04:16 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	return (0);
+	unsigned int		i;
+	char				*str;
+
+	str = (char *)b;
+	i = 0;
+	while (i < len)
+	{
+		str[i] = (unsigned char)(c);
+		i++;
+	}
+	return (b);
 }

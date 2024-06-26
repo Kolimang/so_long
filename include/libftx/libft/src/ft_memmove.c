@@ -1,18 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/10/16 16:34:42 by jrichir           #+#    #+#             */
+/*   Updated: 2024/03/25 10:30:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	return (0);
+	char	*cdst;
+	char	*csrc;
+
+	if (!dst && !src)
+		return (NULL);
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	if (dst <= src)
+	{
+		while (len--)
+		{
+			*cdst++ = *csrc++;
+		}
+	}
+	else if (dst > src)
+	{
+		cdst += len - 1;
+		csrc += len - 1;
+		while (len--)
+		{
+			*cdst-- = *csrc--;
+		}
+	}
+	return (dst);
 }

@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/07 13:31:06 by jrichir           #+#    #+#             */
+/*   Updated: 2023/11/07 15:27:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	return (0);
+	if (!lst || !del)
+		return ;
+	(*del)(lst->content);
+	free(lst);
 }

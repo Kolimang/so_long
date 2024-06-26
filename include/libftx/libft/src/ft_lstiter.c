@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/07 16:18:29 by jrichir           #+#    #+#             */
+/*   Updated: 2023/11/07 16:27:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	return (0);
+	if (!lst || !f)
+		return ;
+	while (lst)
+	{
+		(*f)(lst->content);
+		lst = lst->next;
+	}
 }

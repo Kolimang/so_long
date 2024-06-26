@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/10/16 15:21:33 by jrichir           #+#    #+#             */
+/*   Updated: 2024/03/25 10:29:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	ft_bzero(void *s, size_t n)
 {
-	return (0);
+	unsigned int		i;
+	char				*str;
+
+	str = (char *)s;
+	i = 0;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
+	return ;
 }

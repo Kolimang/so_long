@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/07 15:35:38 by jrichir           #+#    #+#             */
+/*   Updated: 2023/11/07 16:15:49 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	return (0);
+	t_list	*ptr;
+
+	if (!lst || !del)
+		return ;
+	ptr = *lst;
+	while (ptr)
+	{
+		ptr = (*lst)->next;
+		(*del)((*lst)->content);
+		free(*lst);
+		*lst = ptr;
+	}
 }

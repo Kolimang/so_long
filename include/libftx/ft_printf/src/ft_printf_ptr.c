@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf_ptr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/17 16:30:26 by jrichir           #+#    #+#             */
+/*   Updated: 2024/03/20 14:05:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "ft_printf.h"
 
-int	main(int argc, char **argv)
+ssize_t	ft_printf_ptr(unsigned long ptr, int c_count)
 {
-	return (0);
+	ssize_t	result;
+
+	c_count += ft_unsnbrlen_base(ptr, 16) + 2;
+	result = ft_printf_putstr_fd("0x", 1);
+	if (result == -1)
+		return (-1);
+	result = ft_putunsnbr_base(ptr, "0123456789abcdef");
+	if (result == -1)
+		return (-1);
+	else
+		return (c_count);
 }

@@ -1,18 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/10/16 15:21:33 by jrichir           #+#    #+#             */
+/*   Updated: 2023/10/25 17:04:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "libft.h"
 
-int	main(int argc, char **argv)
+// keep pointer protection in this one ?
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	return (0);
+	unsigned int		i;
+	char				*cdst;
+	char				*csrc;
+
+	if (!dst && !src)
+	{
+		return (0);
+	}
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	i = 0;
+	while (i < n)
+	{
+		cdst[i] = csrc[i];
+		i++;
+	}
+	return (dst);
 }

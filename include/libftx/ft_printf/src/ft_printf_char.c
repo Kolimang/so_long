@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/17 14:58:37 by jrichir           #+#    #+#             */
+/*   Updated: 2024/03/20 14:06:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "ft_printf.h"
 
-int	main(int argc, char **argv)
+ssize_t	ft_printf_char(char c, int c_count)
 {
-	return (0);
+	ssize_t			result;
+
+	c_count += 1;
+	result = ft_printf_putchar_fd(c, 1);
+	if (result == -1)
+		return (result);
+	else
+		return (c_count);
 }

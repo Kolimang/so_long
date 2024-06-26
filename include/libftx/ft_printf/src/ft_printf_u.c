@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf_u.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/17 17:36:03 by jrichir           #+#    #+#             */
+/*   Updated: 2023/11/20 12:10:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "ft_printf.h"
 
-int	main(int argc, char **argv)
+ssize_t	ft_printf_u(unsigned int u, int c_count)
 {
-	return (0);
+	ssize_t	result;
+
+	c_count += ft_unsnbrlen_base((unsigned int)u, 10);
+	result = ft_putunsnbr_base((unsigned int)u, "0123456789");
+	if (result == -1)
+		return (result);
+	else
+		return (c_count);
 }

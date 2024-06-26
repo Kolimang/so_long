@@ -1,18 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/26 16:14:13 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/17 14:58:37 by jrichir           #+#    #+#             */
+/*   Updated: 2024/03/20 14:05:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include "ft_printf.h"
 
-int	main(int argc, char **argv)
+ssize_t	ft_printf_str(char *str, int c_count)
 {
-	return (0);
+	ssize_t	result;
+
+	if (!str)
+	{
+		result = ft_printf_putstr_fd("(null)", 1);
+		if (result == -1)
+			return (-1);
+		c_count += 6;
+	}
+	else
+	{
+		result = ft_printf_putstr_fd(str, 1);
+		if (result == -1)
+			return (-1);
+		c_count += (int)ft_printf_strlen(str);
+	}
+	if (result == -1)
+		return (result);
+	else
+		return (c_count);
 }
