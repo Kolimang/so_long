@@ -6,21 +6,21 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 10:28:29 by jrichir           #+#    #+#              #
-#    Updated: 2024/06/26 16:52:34 by jrichir          ###   ########.fr        #
+#    Updated: 2024/06/27 12:08:57 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------- VARIABLES ------------------------------------
 
 ROOT_DIR := $(realpath .)
-INC_DIR  := $(ROOT_DIR)/include # test : added final /
+INC_DIR  := $(ROOT_DIR)/include
 SRC_DIR  := src/
 OBJ_DIR  := build/
 
 NAME     := so_long
 CC       := cc
-CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx # before : -I$(INC_DIR)
-#CFLAGS   := -Wall -Wextra -Werror -I$(INC_DIR) -lm
+#CFLAGS   := -I$(INC_DIR) -Wall -Wextra -Werror
+CFLAGS   := -I$(INC_DIR)
 
 AR       := ar -cr
 RM       := rm -f
@@ -38,9 +38,7 @@ OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-#	@(cd include/libftx ; make all)
-#	@(cd include/mlx ; make all)
-	@$(CC) $(CFLAGS) -framework OpenGL -framework AppKit -L$(INC_DIR)libftx -lft -L$(INC_DIR)mlx -lmlx $(OBJS) -o $@
+	@$(CC) $(CFLAGS) -framework OpenGL -framework AppKit -Wdeprecated-declarations -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
 	@echo "Build $(NAME) program."
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -49,10 +47,11 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@if [ ! -d $(OBJ_DIR) ]; then \
 		mkdir -p $(OBJ_DIR); \
 	fi
-	@$(CC) $(CFLAGS) -Lmlx -lmlx -c $< -o $@
+	@$(CC) $(CFLAGS) -lft -lmlx -c $< -Wdeprecated-declarations -o $@
 
 clean:
 	@(cd include/libftx ; make clean)
+	@(cd include/mlx ; make clean)
 	@$(RM) $(OBJS)
 	@rm -rf $(OBJ_DIR)
 	@echo "Delete $(NAME) object files and dependencies."

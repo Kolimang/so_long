@@ -1,6 +1,12 @@
 # folders
 untracked
 build
+.vscode
+
+# Files
+.DS_Store
+a.out
+so_long
 
 # Prerequisites
 *.d
