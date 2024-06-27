@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:33:37 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/27 12:45:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/06/27 15:28:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@
 //# include <unistd.h>
 //# include <stdlib.h>
 
-typedef struct s_data
+typedef struct	s_vars
+{
+	void	*mlx;
+	void	*win;
+}				t_vars;
+
+typedef struct	s_data
 {
 	void	*img;
 	char	*addr;

@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 10:28:29 by jrichir           #+#    #+#              #
-#    Updated: 2024/06/27 12:08:57 by jrichir          ###   ########.fr        #
+#    Updated: 2024/06/27 14:34:47 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -framework OpenGL -framework AppKit -Wdeprecated-declarations -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
+	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -Wdeprecated-declarations -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
 	@echo "Build $(NAME) program."
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
