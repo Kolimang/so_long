@@ -6,26 +6,37 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:33:37 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/27 15:28:28 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/06/28 12:03:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# define GL_SILENCE_DEPRECATION // does not seem to work
+# define GL_SILENCE_DEPRECATION
 
 # include <libftx/libft.h>
 # include <mlx.h>
 //# include <unistd.h>
 //# include <stdlib.h>
 
-typedef struct	s_vars
+enum
+{
+	ON_KEYDOWN = 2, //   key press
+	ON_KEYUP = 3, //     key release
+	ON_MOUSEDOWN = 4, // button press
+	ON_MOUSEUP = 5, //   button release
+	ON_MOUSEMOVE = 6, // motion
+	ON_EXPOSE = 12, //   window visible
+	ON_DESTROY = 17
+};
+
+typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
 }				t_vars;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*img;
 	char	*addr;
@@ -33,11 +44,5 @@ typedef struct	s_data
 	int		line_length;
 	int		endian;
 }			t_data;
-
-//# define EXIT_ERROR_USAGE "Usage : ./client [server_id] [string]\n"
-
-//void	send_string(int process, char *string);
-//void	send_byte(int process, char byte);
-//void	send_32int(int process, int nb);
 
 #endif

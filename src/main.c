@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/06/27 16:04:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:46:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,14 @@ int	main(void)
 	t_vars	vars;
 
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
-	mlx_hook(vars.win, 2, 1L << 0, close_window, &vars);
+	vars.win = mlx_new_window(vars.mlx, 600, 600, "Hello world!");
+	mlx_hook(vars.win, ON_KEYDOWN, 1L << 0, close_window, &vars);
+	// mlx_hook(vars.win, ON_EXPOSE, 1L << 15, f, ON_EXPOSE);
+	// mlx_hook(vars.win, ON_MOUSEMOVE, 1L << 6, handle, ON_MOUSEMOVE);
+	// mlx_hook(vars.win, ON_MOUSEDOWN, 1L << 2, handle, ON_MOUSEDOWN);
+	// mlx_hook(vars.win, ON_DESTROY, 0, ft_printf(" == Destroy ==\n"), &vars);
 	mlx_loop(vars.mlx);
+	ft_printf("Bye bye!\n");
 	return (0);
 }
 
@@ -69,23 +74,6 @@ int	main(int argc, char **argv)
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_hook(mlx_win, 2, 1L<<0, close_window, &mlx_win);
 	mlx_loop(mlx);
-	return (0);
-}
-
-
-//int	main(int argc, char **argv)
-int	main(int argc, char **argv)
-{
-	t_data	img;
-	void	*mlx;
-	//void	*mlx_win;
-
-	mlx = mlx_init();
-	img.img = mlx_new_image(mlx, 360, 360);
-	//mlx_win = mlx_new_window(mlx, 600, 600, "My first MLX window");
-	//mlx_loop(mlx);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								 &img.endian);
 	return (0);
 }
 */

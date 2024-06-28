@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 10:28:29 by jrichir           #+#    #+#              #
-#    Updated: 2024/06/27 14:34:47 by jrichir          ###   ########.fr        #
+#    Updated: 2024/06/28 16:33:05 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR  := build/
 NAME     := so_long
 CC       := cc
 #CFLAGS   := -I$(INC_DIR) -Wall -Wextra -Werror
-CFLAGS   := -I$(INC_DIR)
+CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx
 
 AR       := ar -cr
 RM       := rm -f
@@ -38,7 +38,8 @@ OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -Wdeprecated-declarations -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
+#	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
+	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -lft -lmlx $(OBJS) -o $@
 	@echo "Build $(NAME) program."
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -47,7 +48,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@if [ ! -d $(OBJ_DIR) ]; then \
 		mkdir -p $(OBJ_DIR); \
 	fi
-	@$(CC) $(CFLAGS) -lft -lmlx -c $< -Wdeprecated-declarations -o $@
+#	@$(CC) $(CFLAGS) -lft -lmlx -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@(cd include/libftx ; make clean)
