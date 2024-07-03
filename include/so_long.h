@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:33:37 by jrichir           #+#    #+#             */
-/*   Updated: 2024/07/03 11:36:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:15:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 # include <libftx/libft.h>
 # include <mlx.h>
 # include <stdlib.h>
+//# include <string.h>
 //# include <unistd.h>
+
+# define TILE_SIZE 32
+# define TXPLAYER "assets/player_32_right.xpm"
+# define TXGRASS "assets/grass_32.xpm"
+# define TXROCK "assets/rock_32.xpm"
+# define TXEXIT "assets/exit_32_open.xpm"
+# define TXCOLLECTIBLE "assets/collectible_32.xpm"
 
 enum
 {
