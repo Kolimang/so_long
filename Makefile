@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 10:28:29 by jrichir           #+#    #+#              #
-#    Updated: 2024/06/28 16:33:05 by jrichir          ###   ########.fr        #
+#    Updated: 2024/07/03 10:15:47 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,9 @@ OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-#	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
-	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -lft -lmlx $(OBJS) -o $@
+	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
+#	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -lft -lmlx $(OBJS) -o $@
+#	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit $(OBJS) -o $@
 	@echo "Build $(NAME) program."
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -48,8 +49,9 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@if [ ! -d $(OBJ_DIR) ]; then \
 		mkdir -p $(OBJ_DIR); \
 	fi
-#	@$(CC) $(CFLAGS) -lft -lmlx -c $< -o $@
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -lft -lmlx -c $< -o $@
+#	@$(CC) $(CFLAGS) -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx -c $< -o $@
+#	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@(cd include/libftx ; make clean)
