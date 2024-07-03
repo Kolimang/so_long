@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:21:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/05/29 16:10:53 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:55:19 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
+
+// --------------------------------- GNL --------------------------------------
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 19
+# endif
+
+int		del(char **str);
+char	*ft_strchr(const char *s, int c);
+char	*get_next_line(int fd);
+size_t	ft_strlen(const char *s);
+char	*ft_gnl_strjoin(char **s1, char **s2, int free_param);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_gnl_strdup(char **s);
+
+// -------------------------------- LIBFT -------------------------------------
 
 typedef struct s_list
 {

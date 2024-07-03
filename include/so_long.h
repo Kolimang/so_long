@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:33:37 by jrichir           #+#    #+#             */
-/*   Updated: 2024/07/03 16:15:05 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:51:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 # include <libftx/libft.h>
 # include <mlx.h>
 # include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+//#include <stdio.h>
 //# include <string.h>
-//# include <unistd.h>
+
 
 # define TILE_SIZE 32
 # define TXPLAYER "assets/player_32_right.xpm"

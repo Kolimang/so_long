@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 15:59:07 by jrichir           #+#    #+#              #
-#    Updated: 2024/05/29 16:15:54 by jrichir          ###   ########.fr        #
+#    Updated: 2024/07/03 16:43:04 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ RM := rm -f
 SRC_DIR := src/
 OBJ_DIR := build/
 
-FILES := ft_memset \
+FILES := gnl \
+		gnl_utils \
+		ft_memset \
 		ft_bzero \
 		ft_calloc \
 		ft_memcpy \

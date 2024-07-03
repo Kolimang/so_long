@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:11:15 by jrichir           #+#    #+#             */
-/*   Updated: 2024/07/03 16:11:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:02:09 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,31 @@ int on_keypress(int keysym, t_data *data)
 	return (0);
 }
  
-int main(void)
+int	main(int argc, char *argv[])
 {
 	t_data	data;
 	int		t_size;
+	int		fd;
+	int		i;
+	char	*line;
+
+	(void)argc;
+	fd = open(argv[1], O_RDWR);
+	if (!fd || fd < 0)
+		return (ft_printf("Le fichier n'a pas pu être ouvert\n"), EXIT_FAILURE);
+	line = "";
+	i = -1;
+	while (line)
+	{
+		line = NULL;
+		line = get_next_line(fd);
+		if (line)
+		{
+			ft_printf("%s", line);
+			free(line);
+		}
+	}
+	close(fd);
 
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
