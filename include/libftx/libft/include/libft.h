@@ -16,11 +16,16 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdio.h> // for FOPEN_MAX constant for GNL compatibility on Linux
 
 // --------------------------------- GNL --------------------------------------
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 19
+# endif
+
+# ifndef OPEN_MAX // then running Linux system
+#  define OPEN_MAX FOPEN_MAX
 # endif
 
 int		del(char **str);
