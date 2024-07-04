@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/26 10:28:29 by jrichir           #+#    #+#              #
-#    Updated: 2024/07/03 10:15:47 by jrichir          ###   ########.fr        #
+#    Updated: 2024/07/04 10:18:30 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,13 @@ OBJ_DIR  := build/
 NAME     := so_long
 CC       := cc
 #CFLAGS   := -I$(INC_DIR) -Wall -Wextra -Werror
-CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx
+CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -g
 
 AR       := ar -cr
 RM       := rm -f
 
 # 			use space or backslash as separator to add more
-FILES    := main
+FILES    := main checks
 
 SRCS     := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
