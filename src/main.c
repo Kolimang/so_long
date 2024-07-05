@@ -102,6 +102,8 @@ int	main(int argc, char *argv[])
 	if(check_grid(&data) == 1)
 		return (array_str_free(data.map->grid, array_str_len(data.map->grid)), 1);
 	array_str_print(data.map->grid, '\n');
+	create_grid(&data, argv[1]);
+	array_str_print(data.map->grid, '\n');
 	data.winw = data.map->width * TILE_SIZE;
 	data.winh = data.map->height * TILE_SIZE;
 	data.mlx_ptr = mlx_init();

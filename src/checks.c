@@ -110,16 +110,43 @@ int	is_wall(char *horiz_edge)
 	while (*horiz_edge)
 	{
 		if (*horiz_edge != '1')
-			return (ft_printf("not wall\n"), 0);
+			return (0);
 		horiz_edge++;
 	}
-	return (ft_printf("wall\n"), 1);
+	return (1);
 }
 
-int	is_playable(t_data data)
+int	floodfill4(t_data *data, int x, int y)
 {
-	
-	return (1);
+	char	tile;
+	int		i;
+
+	i = 0;
+	tile = data->map->grid[x][y];
+	if (tile == 'E')
+	{
+		if (data->map->nb_collectibles == data->map->nb_collected)
+			return (1);
+	}
+	else if (tile != '1')
+	{
+		if (tile == 'C')
+			data->map->nb_collected++;
+		tile = '1';
+		i += floodfill4(data, x, y - 1);
+		i += floodfill4(data, x, y + 1);
+		i += floodfill4(data, x - 1, y);
+		i += floodfill4(data, x + 1, y);
+	}
+	if (i)
+		return (1);
+	return (0);
+}
+
+int	is_playable(t_data *data)
+{
+	data->map->nb_collected = 0;
+	return (floodfill4(data, data->map->start_x, data->map->start_y));
 }
 
 int	check_grid(t_data *data)
@@ -134,10 +161,8 @@ int	check_grid(t_data *data)
 		return (ft_putstr_fd(ERR_MAP4, 2), 1);
 	else if (!is_wall(data->map->grid[0]) || !is_wall(data->map->grid[data->map->height - 1]))
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
-	else if (!is_playable(*data))
-	{
-		void(*data); // placeholder
-	}
+	else if (!is_playable(data))
+		return (ft_putstr_fd(ERR_MAP7, 2), 1);
 	return (0);
 }
 
@@ -157,24 +182,28 @@ void	array_str_print(char **array, char separator)
 
 int	check_map_line(t_data *data, char *map_line, int line_id)
 {
+	int	i;
+
 	if (map_line[0] == '\n')
 		return (ft_putstr_fd(ERR_MAP0, 2), 1);
 	if (map_line[0] != '1' || map_line[line_len(map_line) - 1] != '1')
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
-	while (*map_line != '\n' && *map_line != '\0')
+	i = 0;
+	while (map_line[i] != '\n' && map_line[i] != '\0')
 	{
-		if (*map_line == 'C')
+		if (map_line[i] == 'C')
 			data->map->nb_collectibles++;
-		else if (*map_line == 'E')
+		else if (map_line[i] == 'E')
 			data->map->nb_exit++;
-		else if (*map_line == 'P')
-			data->map->nb_player_start++;
-		else if (*map_line != '0' && *map_line != '1')
+		else if (map_line[i] == 'P')
 		{
-			ft_putstr_fd("Error\nInvalid character in map.\n", 2);
-			return (1);
+			data->map->nb_player_start++;
+			data->map->start_x = i;
+			data->map->start_y = line_id;
 		}
-		map_line++;
+		else if (map_line[i] != '0' && map_line[i] != '1')
+			return (ft_putstr_fd(ERR_MAP6, 2), 1);
+		i++;
 	}
 	return (0);
 }

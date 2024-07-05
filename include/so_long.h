@@ -34,7 +34,8 @@
 # define ERR_MAP3 "Error\nThere must be exactly 1 exit (E).\n"
 # define ERR_MAP4 "Error\nThere must be exactly 1 start position (P).\n"
 # define ERR_MAP5 "Error\nThere must be walls (1) all around the map.\n"
-# define ERR_MAP6 "Error\nMap is not playable (no valid path).\n"
+# define ERR_MAP6 "Error\nInvalid charachter in map.\n"
+# define ERR_MAP7 "Error\nMap is not playable (no valid path).\n"
 
 enum
 {
@@ -57,7 +58,10 @@ typedef struct s_map
 {
 	int		width;
 	int		height;
+	int		start_x;
+	int		start_y;
 	int		nb_collectibles;
+	int		nb_collected;
 	int		nb_player_start;
 	int		nb_exit;
 	int		valid;
@@ -88,12 +92,13 @@ int		check_lines(t_data *data, char *path);
 int		check_map_line(t_data *data, char *map_line, int line_id);
 int		create_grid(t_data *data, char *path);
 int		check_grid(t_data *data);
-int		is_playable(t_data data);
+int		is_playable(t_data *data);
 void	load_textures(t_data *data);
 void	array_str_print(char **array, char separator);
 int		array_str_len(char **array);
 void	array_str_free(char **array, int limit);
 int		is_wall(char *horiz_edge);
+int		floodfill4(t_data *data, int x, int y);
 
 // typedef struct s_data
 // {
