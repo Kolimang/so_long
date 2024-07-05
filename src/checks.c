@@ -161,8 +161,8 @@ int	check_grid(t_data *data)
 		return (ft_putstr_fd(ERR_MAP4, 2), 1);
 	else if (!is_wall(data->map->grid[0]) || !is_wall(data->map->grid[data->map->height - 1]))
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
-	else if (!is_playable(data))
-		return (ft_putstr_fd(ERR_MAP7, 2), 1);
+//	else if (!is_playable(data))
+//		return (ft_putstr_fd(ERR_MAP7, 2), 1);
 	return (0);
 }
 

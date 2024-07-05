@@ -39,12 +39,12 @@
 
 enum
 {
-	ON_KEYPRESS = 2, //   key press
-	ON_KEYRELEASE = 3, //     key release
-	ON_MOUSEPRESS = 4, // button press
-	ON_MOUSERELEASE = 5, //   button release
-	ON_MOUSEMOVE = 6, // motion
-	ON_EXPOSE = 12, //   window visible
+	ON_KEYPRESS = 2,//   key press
+	ON_KEYRELEASE = 3,//     key release
+	ON_MOUSEPRESS = 4,// button press
+	ON_MOUSERELEASE = 5,//   button release
+	ON_MOUSEMOVE = 6,// motion
+	ON_EXPOSE = 12,//   window visible
 	ON_DESTROY = 17
 };
 
@@ -73,6 +73,7 @@ typedef struct s_player
 	int	x;
 	int	y;
 	int	nb_collected_items;
+	int	moves;
 }	t_player;
 
 typedef struct s_data
@@ -83,9 +84,10 @@ typedef struct s_data
 	void		*win_ptr; // MLX window pointer
 	void		*textures[5]; // MLX image pointers (on the stack)
 	t_map		*map; // Map pointer (contains map details pref.bly on stack)
+	t_map		*player;
 }	t_data;
 
-int		init_structures(t_data *data, t_map *map);
+int		init_structures(t_data *data, t_map *map, t_player *player);
 int		line_len(char *s);
 int		check_input(int argc, char **argv);
 int		check_lines(t_data *data, char *path);

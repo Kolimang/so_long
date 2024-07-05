@@ -54,8 +54,9 @@ int on_keypress(int keysym, t_data *data)
 //    \__ else draw the modified squares (player moved, item collected...)
 // Draw image to window
 // Loop over the MLX pointer
-int	init_structures(t_data *data, t_map *map)
+int	init_structures(t_data *data, t_map *map, t_player *player)
 {
+	data->player = player;
 	data->map = map;
 	data->map->nb_exit = 0;
 	data->map->nb_player_start = 0;
@@ -76,15 +77,30 @@ void	load_textures(t_data *data)
 
 void	blit_image(t_data *data)
 {
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], 0, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], TILE_SIZE, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], TILE_SIZE * 2, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], TILE_SIZE * 3, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], TILE_SIZE * 4, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[1], TILE_SIZE, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[2], TILE_SIZE * 2, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[3], TILE_SIZE * 3, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[4], TILE_SIZE * 4, 0);
+	int		x;
+	int		y;
+	char	c;
+
+	y = 0;
+	while (y < data->map->height)
+	{
+		x = 0;
+		while (x < data->map->width)
+		{
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], TILE_SIZE * x, TILE_SIZE * y);
+			c = data->map->grid[y][x];
+			if (c == '1')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[1], TILE_SIZE * x, TILE_SIZE * y);
+			else if (c == 'P')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[2], TILE_SIZE * x, TILE_SIZE * y);
+			else if (c == 'E')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[3], TILE_SIZE * x, TILE_SIZE * y);
+			else if (c == 'C')
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[4], TILE_SIZE * x, TILE_SIZE * y);
+			x++;
+		}
+		y++;
+	}
 }
 
 int	main(int argc, char *argv[])
@@ -93,7 +109,7 @@ int	main(int argc, char *argv[])
 	t_map		map;
 	t_player	player;
 
-	init_structures(&data, &map);
+	init_structures(&data, &map, &player);
 	if (check_input(argc, argv) == 1)
 		return (1);
 	if (check_lines(&data, argv[1]) == 1)
@@ -109,7 +125,7 @@ int	main(int argc, char *argv[])
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, data.winw, data.winh, "Soooo long");
+	data.win_ptr = mlx_new_window(data.mlx_ptr, data.winw, data.winh, "Adventure in the meadows");
 	if (!data.win_ptr)
 		return (free(data.mlx_ptr), 1);
 	mlx_hook(data.win_ptr, ON_KEYRELEASE, 0, &on_keypress, &data);
