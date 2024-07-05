@@ -28,23 +28,57 @@ int on_destroy(t_data *data)
 	return (0);
 }
 
-void go_left(t_data *data)
+void move(t_data *data, int new_x, int new_y)
 {
+	int	x;
+	int	y;
 
+	x = data->player->x;
+	y = data->player->y;
+	new_x += data->player->x;
+	new_y += data->player->y;
+	if (data->map->grid[new_y][new_x] != '1')
+	{
+		if (data->map->grid[new_y][new_x] == 'C')
+		{
+			data->player->nb_collected++;
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], TILE_SIZE * new_x, TILE_SIZE * new_y);
+		}
+		if (data->map->grid[new_y][new_x] == 'E')
+		{
+			if (data->player->nb_collected == data->map->nb_collectibles)
+			{
+				ft_printf("YOU WIN\n ~~ The End ~~\n");
+				on_destroy(data);
+			}
+		}
+		data->map->grid[new_y][new_x] = 'P';
+		data->map->grid[y][x] = '0';
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[0], TILE_SIZE * x, TILE_SIZE * y);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->textures[2], TILE_SIZE * new_x, TILE_SIZE * new_y);
+		data->player->x = new_x;
+		data->player->y = new_y;
+		data->player->moves++;
+		ft_printf("moves: %d\n", data->player->moves);
+		ft_printf("items: %d\n", data->map->nb_collectibles);
+		ft_printf("collected: %d\n", data->player->nb_collected);
+		//array_str_print(data->map->grid, '\n');
+		ft_printf("- - - - - \n");
+	}
 }
 
 int on_keypress(int key, t_data *data)
 {
 	if (key == 123)
-		// left
+		move(data, -1, 0); // left
 	else if (key == 124)
-		right
+		move(data, 1, 0); // right
 	else if (key == 125)
-		//down
+		move(data, 0, 1); // down
 	else if (key == 126)
-		// up
+		move(data, 0, -1); // up
 	else if (key == 53)
-		// clean, free, exit/destroy
+		ft_printf("quit\n");// clean, free, exit/destroy
 	return (0);
 }
 
@@ -70,6 +104,8 @@ int on_keypress(int key, t_data *data)
 int	init_structures(t_data *data, t_map *map, t_player *player)
 {
 	data->player = player;
+	data->player->moves = 0;
+	data->player->nb_collected = 0;
 	data->map = map;
 	data->map->nb_exit = 0;
 	data->map->nb_player_start = 0;
@@ -130,7 +166,6 @@ int	main(int argc, char *argv[])
 	create_grid(&data, argv[1]);
 	if(check_grid(&data) == 1)
 		return (array_str_free(data.map->grid, array_str_len(data.map->grid)), 1);
-	array_str_print(data.map->grid, '\n');
 	create_grid(&data, argv[1]);
 	array_str_print(data.map->grid, '\n');
 	data.player->x = data.map->start_x;

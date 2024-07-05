@@ -72,7 +72,7 @@ typedef struct s_player
 {
 	int	x;
 	int	y;
-	int	nb_collected_items;
+	int	nb_collected;
 	int	moves;
 }	t_player;
 
@@ -101,6 +101,8 @@ int		array_str_len(char **array);
 void	array_str_free(char **array, int limit);
 int		is_wall(char *horiz_edge);
 int		floodfill4(t_data *data, int x, int y);
+
+void 	move(t_data *data, int new_x, int new_y);
 
 // typedef struct s_data
 // {
