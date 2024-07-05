@@ -84,7 +84,7 @@ typedef struct s_data
 	void		*win_ptr; // MLX window pointer
 	void		*textures[5]; // MLX image pointers (on the stack)
 	t_map		*map; // Map pointer (contains map details pref.bly on stack)
-	t_map		*player;
+	t_player	*player;
 }	t_data;
 
 int		init_structures(t_data *data, t_map *map, t_player *player);

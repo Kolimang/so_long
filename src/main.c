@@ -28,10 +28,23 @@ int on_destroy(t_data *data)
 	return (0);
 }
 
-int on_keypress(int keysym, t_data *data)
+void go_left(t_data *data)
 {
-	(void)data;
-	ft_printf("Pressed key: %d\\n", keysym);
+
+}
+
+int on_keypress(int key, t_data *data)
+{
+	if (key == 123)
+		// left
+	else if (key == 124)
+		right
+	else if (key == 125)
+		//down
+	else if (key == 126)
+		// up
+	else if (key == 53)
+		// clean, free, exit/destroy
 	return (0);
 }
 
@@ -120,6 +133,8 @@ int	main(int argc, char *argv[])
 	array_str_print(data.map->grid, '\n');
 	create_grid(&data, argv[1]);
 	array_str_print(data.map->grid, '\n');
+	data.player->x = data.map->start_x;
+	data.player->y = data.map->start_y;
 	data.winw = data.map->width * TILE_SIZE;
 	data.winh = data.map->height * TILE_SIZE;
 	data.mlx_ptr = mlx_init();
