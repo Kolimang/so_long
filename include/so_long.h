@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:33:37 by jrichir           #+#    #+#             */
-/*   Updated: 2024/07/03 16:51:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/04 19:12:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,20 @@
 //#include <stdio.h>
 //# include <string.h>
 
-
 # define TILE_SIZE 32
 # define TXPLAYER "assets/player_32_right.xpm"
 # define TXGRASS "assets/grass_32.xpm"
 # define TXROCK "assets/rock_32.xpm"
 # define TXEXIT "assets/exit_32_open.xpm"
 # define TXCOLLECTIBLE "assets/collectible_32.xpm"
+
+# define ERR_MAP0 "Error\nEmpty line in map.\n"
+# define ERR_MAP1 "Error\nMap too large. Max 80 columns and 44 lines.\n"
+# define ERR_MAP2 "Error\nThere must be at least 1 collectible (C).\n"
+# define ERR_MAP3 "Error\nThere must be exactly 1 exit (E).\n"
+# define ERR_MAP4 "Error\nThere must be exactly 1 start position (P).\n"
+# define ERR_MAP5 "Error\nThere must be walls (1) all around the map.\n"
+# define ERR_MAP6 "Error\nMap is not playable (no valid path).\n"
 
 enum
 {
@@ -48,18 +55,43 @@ typedef struct s_vars
 
 typedef struct s_map
 {
-	int	width;
-	int	height;
-	int	valid;
+	int		width;
+	int		height;
+	int		nb_collectibles;
+	int		nb_player_start;
+	int		nb_exit;
+	int		valid;
+	char	**grid;
 }	t_map;
+
+typedef struct s_player
+{
+	int	x;
+	int	y;
+	int	nb_collected_items;
+}	t_player;
 
 typedef struct s_data
 {
+	int			winw;
+	int			winh;
 	void		*mlx_ptr; // MLX pointer
 	void		*win_ptr; // MLX window pointer
 	void		*textures[5]; // MLX image pointers (on the stack)
 	t_map		*map; // Map pointer (contains map details pref.bly on stack)
 }	t_data;
+
+int		init_structures(t_data *data, t_map *map);
+int		line_len(char *s);
+int		check_input(int argc, char **argv);
+int		check_lines(t_data *data, char *path);
+int		check_map_line(t_data *data, char *map_line, int line_id);
+int		create_grid(t_data *data, char *path);
+int		check_grid(t_data *data);
+int		is_playable(t_data data);
+void	load_textures(t_data *data);
+void	array_str_print(char **array, char separator);
+int		is_wall(char *horiz_edge);
 
 // typedef struct s_data
 // {

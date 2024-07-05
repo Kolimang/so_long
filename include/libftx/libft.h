@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:21:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/05/28 17:02:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/04 19:08:46 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		ft_unsnbrlen_base(unsigned long int nb, int radix);
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 19
 # endif
+# include <limits.h>
 
 int		del(char **str);
 char	*ft_strchr(const char *s, int c);

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:21:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/07/03 16:55:19 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:41:18 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 # endif
 
 int		del(char **str);
-char	*ft_strchr(const char *s, int c);
+char	*ft_gnl_strchr(const char *s, int c);
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
+size_t	ft_gnl_strlen(const char *s);
 char	*ft_gnl_strjoin(char **s1, char **s2, int free_param);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	ft_gnl_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_gnl_strdup(char **s);
 
 // -------------------------------- LIBFT -------------------------------------

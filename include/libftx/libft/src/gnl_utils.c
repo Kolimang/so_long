@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:50:11 by jrichir           #+#    #+#             */
-/*   Updated: 2024/07/03 16:49:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:41:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_gnl_strlen(const char *s)
 {
 	size_t	i;
 
@@ -37,7 +37,7 @@ char	*ft_gnl_strjoin(char **s1, char **s2, int free_param)
 
 	if ((!s1 && !s2) || (!*s1 && !*s2))
 		return (NULL);
-	len = ft_strlen(*s1) + ft_strlen(*s2) + 1;
+	len = ft_gnl_strlen(*s1) + ft_gnl_strlen(*s2) + 1;
 	joined = (char *)malloc(len * sizeof(char));
 	if (!joined)
 		return (del(s1), del(s2), NULL);
@@ -57,7 +57,7 @@ char	*ft_gnl_strjoin(char **s1, char **s2, int free_param)
 	return (joined);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_gnl_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	unsigned int	i;
 
@@ -73,7 +73,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		}
 		dst[i] = '\0';
 	}
-	return (ft_strlen(src));
+	return (ft_gnl_strlen(src));
 }
 
 char	*ft_gnl_strdup(char **s)
@@ -83,17 +83,17 @@ char	*ft_gnl_strdup(char **s)
 
 	if (!s || !*s)
 		return (NULL);
-	len = ft_strlen(*s);
+	len = ft_gnl_strlen(*s);
 	dup = malloc((len + 1) * sizeof(char));
 	if (!dup)
 	{
 		return (del(s), NULL);
 	}
-	ft_strlcpy(dup, *s, len + 1);
+	ft_gnl_strlcpy(dup, *s, len + 1);
 	return (dup);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_gnl_strchr(const char *s, int c)
 {
 	char	*result;
 	int		i;
@@ -102,7 +102,7 @@ char	*ft_strchr(const char *s, int c)
 		return (NULL);
 	if ((char)c == '\0')
 	{
-		return (((char *)s) + (ft_strlen(s) * sizeof(char)));
+		return (((char *)s) + (ft_gnl_strlen(s) * sizeof(char)));
 	}
 	else
 	{

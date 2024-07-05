@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 10:28:16 by jrichir           #+#    #+#             */
-/*   Updated: 2024/07/03 16:50:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:36:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static char	**split_at_nl(char **str, char **splitpos)
 	chunks[0] = malloc((1 + len) * sizeof(char));
 	if (!chunks[0])
 		return (del(str), free(chunks), NULL);
-	chunks[1] = malloc((ft_strlen(*str) - len + 1) * sizeof(char));
+	chunks[1] = malloc((ft_gnl_strlen(*str) - len + 1) * sizeof(char));
 	if (!chunks[1])
 		return (del(str), del(&chunks[0]), free(chunks), NULL);
-	ft_strlcpy(chunks[0], *str, len + 1);
-	ft_strlcpy(chunks[1], *str + len, ft_strlen(*str) - len + 1);
+	ft_gnl_strlcpy(chunks[0], *str, len + 1);
+	ft_gnl_strlcpy(chunks[1], *str + len, ft_gnl_strlen(*str) - len + 1);
 	del(str);
 	return (chunks);
 }
@@ -48,7 +48,7 @@ static char	*process_line(char **stock)
 	char	*nl;
 	char	*line;
 
-	nl = ft_strchr(*stock, '\n');
+	nl = ft_gnl_strchr(*stock, '\n');
 	if (!nl)
 	{
 		line = ft_gnl_strdup(stock);
@@ -83,7 +83,7 @@ char	*get_next_line(int fd)
 	rd_buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!rd_buf && del(&stock[fd]))
 		return (NULL);
-	while (!ft_strchr(stock[fd], '\n'))
+	while (!ft_gnl_strchr(stock[fd], '\n'))
 	{
 		count = read(fd, rd_buf, BUFFER_SIZE);
 		if (count < 0 || (count == 0 && (!stock[fd] || stock[fd][0] == '\0')))
