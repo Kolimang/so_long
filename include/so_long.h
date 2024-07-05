@@ -91,6 +91,7 @@ int		check_grid(t_data *data);
 int		is_playable(t_data data);
 void	load_textures(t_data *data);
 void	array_str_print(char **array, char separator);
+int		array_str_len(char **array);
 void	array_str_free(char **array, int limit);
 int		is_wall(char *horiz_edge);
 

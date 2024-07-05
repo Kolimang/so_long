@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <push_swap.h>
+#include <so_long.h>
 
 void	array_str_free(char **array, int limit)
 {
@@ -40,25 +40,3 @@ int	array_str_len(char **array)
 	return (i);
 }
 
-int	*array_atoi(char **array)
-{
-	int	i;
-	int	*intarray;
-
-	if (!array)
-		return (NULL);
-	intarray = (int *)malloc((array_str_len(array)) * sizeof(int));
-	if (!intarray)
-		return (NULL);
-	i = -1;
-	while (array[++i])
-	{
-		if (ft_streqint(array[i]) == -1)
-		{
-			free(intarray);
-			return (NULL);
-		}
-		intarray[i] = ft_atoi(array[i]);
-	}
-	return (intarray);
-}
