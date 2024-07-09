@@ -45,12 +45,12 @@
 
 enum
 {
-	ON_KEYPRESS = 2,//   key press
-	ON_KEYRELEASE = 3,//     key release
-	ON_MOUSEPRESS = 4,// button press
-	ON_MOUSERELEASE = 5,//   button release
-	ON_MOUSEMOVE = 6,// motion
-	ON_EXPOSE = 12,//   window visible
+	ON_KEYPRESS = 2,
+	ON_KEYRELEASE = 3,
+	ON_MOUSEPRESS = 4,
+	ON_MOUSERELEASE = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
 
