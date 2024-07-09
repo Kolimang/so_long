@@ -46,7 +46,7 @@ int	line_len(char *s)
 	return (i);
 }
 
-int	check_lines(t_data *data, char *path)
+int	check_lines(t_nfo *nfo, char *path)
 {
 	int		fd;
 	int		i;
@@ -60,28 +60,28 @@ int	check_lines(t_data *data, char *path)
 		line = get_next_line(fd);
 		if (line)
 		{
-			data->map->width = line_len(line);
-			if (check_map_line(data, line, i) == 1)
+			nfo->map->width = line_len(line);
+			if (check_map_line(nfo, line, i) == 1)
 				return (free(line), 1);
 			free(line);
 			i++;
 		}
 	}
 	close(fd);
-	data->map->height = i;
+	nfo->map->height = i;
 	return (0);
 }
 
-int	create_grid(t_data *data, char *path)
+int	create_grid(t_nfo *nfo, char *path)
 {
 	int		fd;
 	int		i;
 	char	*line;
 
-	data->map->grid = malloc((data->map->height + 1) * sizeof(char *));
-	if (!data->map->grid)
+	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
+	if (!nfo->map->grid)
 		return (1);
-	data->map->grid[data->map->height] = NULL;
+	nfo->map->grid[nfo->map->height] = NULL;
 	fd = open(path, O_RDWR);
 	line = "";
 	i = 0;
@@ -90,11 +90,11 @@ int	create_grid(t_data *data, char *path)
 		line = get_next_line(fd);
 		if (line)
 		{
-			data->map->grid[i] = malloc((line_len(line) + 1) * sizeof(char));
-			if (!data->map->grid[i])
+			nfo->map->grid[i] = malloc((line_len(line) + 1) * sizeof(char));
+			if (!nfo->map->grid[i])
 				return (1);
-			ft_strlcpy(data->map->grid[i], (const char *)line, line_len(line) + 1);
-			data->map->grid[i][line_len(line)] = '\0';
+			ft_strlcpy(nfo->map->grid[i], (const char *)line, line_len(line) + 1);
+			nfo->map->grid[i][line_len(line)] = '\0';
 			i++;
 			free(line);
 		}
@@ -116,42 +116,42 @@ int	is_wall(char *horiz_edge)
 	return (1);
 }
 
-int	floodfill4(t_data *data, int x, int y)
+int	floodfill4(t_nfo *nfo, int x, int y)
 {
-	if (x >= 0 && x < data->map->width && y >= 0 && y < data->map->height)
+	if (x >= 0 && x < nfo->map->width && y >= 0 && y < nfo->map->height)
 	{
-		if (data->map->grid[y][x] != '1')
+		if (nfo->map->grid[y][x] != '1')
 		{
-			data->map->grid[y][x] = '1';
-			floodfill4(data, x, y - 1);
-			floodfill4(data, x, y + 1);
-			floodfill4(data, x - 1, y);
-			floodfill4(data, x + 1, y);
+			nfo->map->grid[y][x] = '1';
+			floodfill4(nfo, x, y - 1);
+			floodfill4(nfo, x, y + 1);
+			floodfill4(nfo, x - 1, y);
+			floodfill4(nfo, x + 1, y);
 		}
 	}
 	return (0);
 }
 
-int	is_playable(t_data *data)
+int	is_playable(t_nfo *nfo)
 {
-	data->map->nb_collected = 0;
-	floodfill4(data, data->map->start_x, data->map->start_y);
-	return (is_fully_flooded(data));
+	nfo->map->nb_collected = 0;
+	floodfill4(nfo, nfo->map->start_x, nfo->map->start_y);
+	return (is_fully_flooded(nfo));
 }
 
-int	is_fully_flooded(t_data *data)
+int	is_fully_flooded(t_nfo *nfo)
 {
 	int		x;
 	int		y;
 	char	c;
 
 	y = 0;
-	while (y < data->map->height)
+	while (y < nfo->map->height)
 	{
 		x = 0;
-		while (x < data->map->width)
+		while (x < nfo->map->width)
 		{
-			c = data->map->grid[y][x];
+			c = nfo->map->grid[y][x];
 			if (c != '1')
 				return (0);
 			x++;
@@ -161,19 +161,19 @@ int	is_fully_flooded(t_data *data)
 	return (1);
 }
 
-int	check_grid(t_data *data)
+int	check_grid(t_nfo *nfo)
 {
-	if (data->map->height > 44 || data->map->width > 80)
+	if (nfo->map->height > 44 || nfo->map->width > 80)
 		return (ft_putstr_fd(ERR_MAP1, 2), 1);
-	else if (data->map->nb_collectibles < 1)
+	else if (nfo->map->nb_collectibles < 1)
 		return (ft_putstr_fd(ERR_MAP2, 2), 1);
-	else if (data->map->nb_exit != 1)
+	else if (nfo->map->nb_exit != 1)
 		return (ft_putstr_fd(ERR_MAP3, 2), 1);
-	else if (data->map->nb_player_start != 1)
+	else if (nfo->map->nb_hero_start != 1)
 		return (ft_putstr_fd(ERR_MAP4, 2), 1);
-	else if (!is_wall(data->map->grid[0]) || !is_wall(data->map->grid[data->map->height - 1]))
+	else if (!is_wall(nfo->map->grid[0]) || !is_wall(nfo->map->grid[nfo->map->height - 1]))
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
-	else if (!is_playable(data))
+	else if (!is_playable(nfo))
 		return (ft_putstr_fd(ERR_MAP7, 2), 1);
 	return (0);
 }
@@ -192,7 +192,7 @@ void	array_str_print(char **array, char separator)
 	ft_printf("\n");
 }
 
-int	check_map_line(t_data *data, char *map_line, int line_id)
+int	check_map_line(t_nfo *nfo, char *map_line, int line_id)
 {
 	int	i;
 
@@ -204,18 +204,18 @@ int	check_map_line(t_data *data, char *map_line, int line_id)
 	while (map_line[i] != '\n' && map_line[i] != '\0')
 	{
 		if (map_line[i] == 'C')
-			data->map->nb_collectibles++;
+			nfo->map->nb_collectibles++;
 		else if (map_line[i] == 'E')
 		{
-			data->map->nb_exit++;
-			data->map->exit_x = i;
-			data->map->exit_y = line_id;
+			nfo->map->nb_exit++;
+			nfo->map->exit_x = i;
+			nfo->map->exit_y = line_id;
 		}
 		else if (map_line[i] == 'P')
 		{
-			data->map->nb_player_start++;
-			data->map->start_x = i;
-			data->map->start_y = line_id;
+			nfo->map->nb_hero_start++;
+			nfo->map->start_x = i;
+			nfo->map->start_y = line_id;
 		}
 		else if (map_line[i] != '0' && map_line[i] != '1')
 			return (ft_putstr_fd(ERR_MAP6, 2), 1);
