@@ -18,8 +18,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
-//#include <stdio.h>
-//# include <string.h>
 
 # define TILE_SZ 32
 # define GM_NAME "A walk in the park"
@@ -88,10 +86,10 @@ typedef struct s_nfo
 {
 	int			winw;
 	int			winh;
-	void		*mlx; // MLX pointer
-	void		*windw; // MLX window pointer
-	void		*gfx[9]; // MLX image pointers (on the stack)
-	t_map		*map; // Map pointer (contains map details pref.bly on stack)
+	void		*mlx;
+	void		*windw;
+	void		*gfx[9];
+	t_map		*map;
 	t_player	*hero;
 }	t_nfo;
 
@@ -111,14 +109,5 @@ int		is_wall(char *horiz_edge);
 int		floodfill4(t_nfo *nfo, int x, int y);
 int		is_fully_flooded(t_nfo *nfo);
 void 	move(t_nfo *nfo, int new_x, int new_y, int d);
-
-// typedef struct s_nfo
-// {
-// 	void	*img;
-// 	char	*addr;
-// 	int		bits_per_pixel;
-// 	int		line_length;
-// 	int		endian;
-// }			t_nfo;
 
 #endif
