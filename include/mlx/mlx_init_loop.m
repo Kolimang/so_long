@@ -13,17 +13,17 @@
 
 void	do_loop_hook2(CFRunLoopTimerRef observer, void * info)
 {
-  ((mlx_t *)info)->loop_hook(((mlx_t *)info)->loop_hook_nfo);
+  ((mlx_ptr_t *)info)->loop_hook(((mlx_ptr_t *)info)->loop_hook_data);
 }
 
 
 void do_loop_flush(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void * info)
 {
-  mlx_t	*mlx;
+  mlx_ptr_t	*mlx_ptr;
   mlx_win_list_t *win;
 
-  mlx = (mlx_t *)info;
-  win = mlx->win_list;
+  mlx_ptr = (mlx_ptr_t *)info;
+  win = mlx_ptr->win_list;
   while (win)
     {
       if (win->nb_flush > 0 && win->pixmgt)
@@ -42,7 +42,7 @@ void do_loop_flush(CFRunLoopObserverRef observer, CFRunLoopActivity activity, vo
 
 void *mlx_init()
 {
-  mlx_t	*new_mlx;
+  mlx_ptr_t	*new_mlx;
   int		bidon;
   int		i;
 
@@ -51,7 +51,7 @@ void *mlx_init()
   new_mlx->win_list = NULL;
   new_mlx->img_list = NULL;
   new_mlx->loop_hook = NULL;
-  new_mlx->loop_hook_nfo = NULL;
+  new_mlx->loop_hook_data = NULL;
   new_mlx->main_loop_active = 0;
 
   new_mlx->appid = [NSApplication sharedApplication];
@@ -73,10 +73,10 @@ void *mlx_init()
   i = 0;
   while (i < 4*(FONT_WIDTH+2)*95*FONT_HEIGHT)
     {
-      new_mlx->font->buffer[i+0] = font_atlas.pixel_nfo[i+2];
-      new_mlx->font->buffer[i+1] = font_atlas.pixel_nfo[i+1];
-      new_mlx->font->buffer[i+2] = font_atlas.pixel_nfo[i+0];
-      ((unsigned char *)new_mlx->font->buffer)[i+3] = 0xFF-font_atlas.pixel_nfo[i+3];
+      new_mlx->font->buffer[i+0] = font_atlas.pixel_data[i+2];
+      new_mlx->font->buffer[i+1] = font_atlas.pixel_data[i+1];
+      new_mlx->font->buffer[i+2] = font_atlas.pixel_data[i+0];
+      ((unsigned char *)new_mlx->font->buffer)[i+3] = 0xFF-font_atlas.pixel_data[i+3];
       i += 4;
     }
 
@@ -97,29 +97,29 @@ void *mlx_init()
 }
 
 
-void mlx_loop(mlx_t *mlx)
+void mlx_loop(mlx_ptr_t *mlx_ptr)
 {
   CFRunLoopObserverRef observer;
-  CFRunLoopObserverContext ocontext = {.version = 0, .info = mlx, .retain = NULL, .release = NULL, .copyDescription = NULL};
+  CFRunLoopObserverContext ocontext = {.version = 0, .info = mlx_ptr, .retain = NULL, .release = NULL, .copyDescription = NULL};
 
-  mlx->main_loop_active = 1;
+  mlx_ptr->main_loop_active = 1;
 
   observer = CFRunLoopObserverCreate(NULL, kCFRunLoopBeforeTimers, true, 0, do_loop_flush, &ocontext);
   CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopCommonModes);
 
-  //  [[[MlxLoopHookObj alloc] initWithPtr:mlx] performSelector:@selector(do_loop_hook) withObject:nil afterDelay:0.0];
+  //  [[[MlxLoopHookObj alloc] initWithPtr:mlx_ptr] performSelector:@selector(do_loop_hook) withObject:nil afterDelay:0.0];
 
   [NSApp run];
 }
 
 
-void mlx_pixel_put(mlx_t *mlx, mlx_win_list_t *windw, int x, int y, int color)
+void mlx_pixel_put(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, int x, int y, int color)
 {
-  if (!windw->pixmgt)
+  if (!win_ptr->pixmgt)
     return ;
-  [(id)(windw->winid) selectGLContext];
-  [(id)(windw->winid) pixelPutColor:color X:x Y:y];
-  windw->nb_flush ++;
+  [(id)(win_ptr->winid) selectGLContext];
+  [(id)(win_ptr->winid) pixelPutColor:color X:x Y:y];
+  win_ptr->nb_flush ++;
 }
 
 
@@ -146,11 +146,11 @@ void	mlx_int_loop_once()
 }
 
 
-int     mlx_do_sync(mlx_t *mlx)
+int     mlx_do_sync(mlx_ptr_t *mlx_ptr)
 {
   mlx_win_list_t *win;
 
-  win = mlx->win_list;
+  win = mlx_ptr->win_list;
   while (win)
     {
       if (win->pixmgt)
@@ -158,7 +158,7 @@ int     mlx_do_sync(mlx_t *mlx)
 	  [(id)(win->winid) selectGLContext];
 	  [(id)(win->winid) mlx_gl_draw];
 	  glFlush();
-	  if (!mlx->main_loop_active)
+	  if (!mlx_ptr->main_loop_active)
 	    mlx_int_loop_once();
 	}
       win = win->next;
@@ -167,24 +167,24 @@ int     mlx_do_sync(mlx_t *mlx)
 }
 
 
-int mlx_loop_hook(mlx_t *mlx, void (*fct)(void *), void *param)
+int mlx_loop_hook(mlx_ptr_t *mlx_ptr, void (*fct)(void *), void *param)
 {
-  CFRunLoopTimerContext	tcontext = {0, mlx, NULL, NULL, NULL};
+  CFRunLoopTimerContext	tcontext = {0, mlx_ptr, NULL, NULL, NULL};
   CFRunLoopTimerRef	timer;
 
-  if (mlx->loop_hook != NULL)
+  if (mlx_ptr->loop_hook != NULL)
     {
-      CFRunLoopTimerInvalidate(mlx->loop_timer);
-      [(id)(mlx->loop_timer) release];
+      CFRunLoopTimerInvalidate(mlx_ptr->loop_timer);
+      [(id)(mlx_ptr->loop_timer) release];
     }
 
-  mlx->loop_hook = fct;
-  mlx->loop_hook_nfo = param;
+  mlx_ptr->loop_hook = fct;
+  mlx_ptr->loop_hook_data = param;
 
   if (fct)
     {
       timer = CFRunLoopTimerCreate(kCFAllocatorDefault, 0.0, 0.0001, 0, 0, &do_loop_hook2, &tcontext);
-      mlx->loop_timer = timer;
+      mlx_ptr->loop_timer = timer;
       CFRunLoopAddTimer(CFRunLoopGetMain(), timer, kCFRunLoopCommonModes);
     }
 

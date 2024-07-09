@@ -23,7 +23,7 @@ NSOpenGLPixelFormatAttribute pfa_attrs_opengl[] =
 
 
 
-void	*mlx_new_opengl_window(mlx_t *mlx, int size_x, int size_y, char *title)
+void	*mlx_new_opengl_window(mlx_ptr_t *mlx_ptr, int size_x, int size_y, char *title)
 {
   mlx_win_list_t	*newwin;
   NSString		*str;
@@ -31,10 +31,10 @@ void	*mlx_new_opengl_window(mlx_t *mlx, int size_x, int size_y, char *title)
   if ((newwin = malloc(sizeof(*newwin))) == NULL)
     return ((void *)0);
   newwin->img_list = NULL;
-  newwin->next = mlx->win_list;
+  newwin->next = mlx_ptr->win_list;
   newwin->nb_flush = 0;
   newwin->pixmgt = 0;
-  mlx->win_list = newwin;
+  mlx_ptr->win_list = newwin;
 
   NSRect windowRect = NSMakeRect(100, 100, size_x, size_y);
   str = [NSString stringWithCString:title encoding:NSASCIIStringEncoding];
@@ -44,14 +44,14 @@ void	*mlx_new_opengl_window(mlx_t *mlx, int size_x, int size_y, char *title)
 }
 
 
-int	mlx_opengl_swap_buffers(mlx_win_list_t *windw)
+int	mlx_opengl_swap_buffers(mlx_win_list_t *win_ptr)
 {
-  [(id)(windw->winid) flushGLContext];
+  [(id)(win_ptr->winid) flushGLContext];
   return (0);
 }
 
-int	mlx_opengl_window_set_context(mlx_win_list_t *windw)
+int	mlx_opengl_window_set_context(mlx_win_list_t *win_ptr)
 {
-  [(id)(windw->winid) selectGLContext];
+  [(id)(win_ptr->winid) selectGLContext];
   return (0);
 }

@@ -18,18 +18,18 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+//#include <stdio.h>
+//# include <string.h>
 
 # define TILE_SIZE 32
-# define GM_NAME  "Walk in the park"
-
-# define TXhero_R    "assets/hero_32_right.xpm"
-# define TXhero_L    "assets/hero_32_left.xpm"
-# define TXhero_D    "assets/hero_32_down.xpm"
-# define TXhero_U    "assets/hero_32_up.xpm"
-# define TXGRASS       "assets/grass_32.xpm"
-# define TXROCK        "assets/rock_32.xpm"
-# define TXEXIT_C      "assets/exit_32_closed.xpm"
-# define TXEXIT_O      "assets/exit_32_open.xpm"
+# define TXPLAYER_R "assets/player_32_right.xpm"
+# define TXPLAYER_L "assets/player_32_left.xpm"
+# define TXPLAYER_D "assets/player_32_down.xpm"
+# define TXPLAYER_U "assets/player_32_up.xpm"
+# define TXGRASS "assets/grass_32.xpm"
+# define TXROCK "assets/rock_32.xpm"
+# define TXEXIT_C "assets/exit_32_closed.xpm"
+# define TXEXIT_O "assets/exit_32_open.xpm"
 # define TXCOLLECTIBLE "assets/collectible_32.xpm"
 
 # define ERR_MAP0 "Error\nEmpty line in map.\n"
@@ -43,14 +43,20 @@
 
 enum
 {
-	ON_KEYPRESS = 2,
-	ON_KEYRELEASE = 3,
-	ON_MOUSEPRESS = 4,
-	ON_MOUSERELEASE = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
+	ON_KEYPRESS = 2,//   key press
+	ON_KEYRELEASE = 3,//     key release
+	ON_MOUSEPRESS = 4,// button press
+	ON_MOUSERELEASE = 5,//   button release
+	ON_MOUSEMOVE = 6,// motion
+	ON_EXPOSE = 12,//   window visible
 	ON_DESTROY = 17
 };
+
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+}				t_vars;
 
 typedef struct s_map
 {
@@ -62,13 +68,13 @@ typedef struct s_map
 	int		exit_y;
 	int		nb_collectibles;
 	int		nb_collected;
-	int		nb_hero_start;
+	int		nb_player_start;
 	int		nb_exit;
 	int		valid;
 	char	**grid;
 }	t_map;
 
-typedef struct s_hero
+typedef struct s_player
 {
 	int	x;
 	int	y;
@@ -76,32 +82,41 @@ typedef struct s_hero
 	int	moves;
 }	t_player;
 
-typedef struct s_nfo
+typedef struct s_data
 {
 	int			winw;
 	int			winh;
-	void		*mlx;
-	void		*windw;
-	void		*gfx[9];
-	t_map		*map;
-	t_player	*hero;
-}	t_nfo;
+	void		*mlx_ptr; // MLX pointer
+	void		*win_ptr; // MLX window pointer
+	void		*textures[9]; // MLX image pointers (on the stack)
+	t_map		*map; // Map pointer (contains map details pref.bly on stack)
+	t_player	*player;
+}	t_data;
 
-int		init_structures(t_nfo *nfo, t_map *map, t_player *hero);
+int		init_structures(t_data *data, t_map *map, t_player *player);
 int		line_len(char *s);
 int		check_input(int argc, char **argv);
-int		check_lines(t_nfo *nfo, char *path);
-int		check_map_line(t_nfo *nfo, char *map_line, int line_id);
-int		create_grid(t_nfo *nfo, char *path);
-int		check_grid(t_nfo *nfo);
-int		is_playable(t_nfo *nfo);
-void	load_textures(t_nfo *nfo);
+int		check_lines(t_data *data, char *path);
+int		check_map_line(t_data *data, char *map_line, int line_id);
+int		create_grid(t_data *data, char *path);
+int		check_grid(t_data *data);
+int		is_playable(t_data *data);
+void	load_textures(t_data *data);
 void	array_str_print(char **array, char separator);
 int		array_str_len(char **array);
 void	array_str_free(char **array, int limit);
 int		is_wall(char *horiz_edge);
-int		floodfill4(t_nfo *nfo, int x, int y);
-int		is_fully_flooded(t_nfo *nfo);
-void	move(t_nfo *nfo, int new_x, int new_y, int d);
+int		floodfill4(t_data *data, int x, int y);
+int		is_fully_flooded(t_data *data);
+void 	move(t_data *data, int new_x, int new_y, int d);
+
+// typedef struct s_data
+// {
+// 	void	*img;
+// 	char	*addr;
+// 	int		bits_per_pixel;
+// 	int		line_length;
+// 	int		endian;
+// }			t_data;
 
 #endif

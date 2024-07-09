@@ -31,8 +31,8 @@ unsigned char magic[PNG_MAGIC_SIZE] = {137, 80, 78, 71, 13, 10, 26, 10};
 #define	ERR_STRUCT_DAT	8
 #define	ERR_STRUCT_MISSCHK	9
 #define	ERR_ZLIB	10
-#define	ERR_nfo_MISMATCH	11
-#define	ERR_nfo_FILTER	12
+#define	ERR_DATA_MISMATCH	11
+#define	ERR_DATA_FILTER	12
 char *(mipng_err[]) =
 {
   "No error",
@@ -46,7 +46,7 @@ char *(mipng_err[]) =
   "Non consecutive dat chunks",
   "Missing header/dat/end chunk(s)",
   "Zlib inflate error",
-  "Inflated nfo size mismatch",
+  "Inflated data size mismatch",
   "Unknown scanline filter"
 };
 
@@ -127,7 +127,7 @@ int	mipng_fill_img(mlx_img_list_t *img, unsigned char *buf, png_info_t *pi)
       if ((ipos % iline) == 0)
 	{
 	  if ((current_filter = buf[bpos++]) > 4)
-	    return (ERR_nfo_FILTER);
+	    return (ERR_DATA_FILTER);
 	}
       ibuf[ipos] = mipng_defilter[current_filter](buf, bpos,
 				 ipos%iline>3?ibuf[ipos-UNIQ_BPP]:0,
@@ -143,7 +143,7 @@ int	mipng_fill_img(mlx_img_list_t *img, unsigned char *buf, png_info_t *pi)
   if (ipos != ilen || bpos != blen)
     {
       //      printf("fill err ipos %d vs %d, bpos %d vs %d\n", ipos, ilen, bpos, blen);
-      return (ERR_nfo_MISMATCH);
+      return (ERR_DATA_MISMATCH);
     }
   ipos = 0;
   while (ipos < ilen)
@@ -158,7 +158,7 @@ int	mipng_fill_img(mlx_img_list_t *img, unsigned char *buf, png_info_t *pi)
 }
 
 
-int	mipng_nfo(mlx_img_list_t *img, unsigned char *dat, png_info_t *pi)
+int	mipng_data(mlx_img_list_t *img, unsigned char *dat, png_info_t *pi)
 {
   unsigned int	len;
   int		b_pos;
@@ -202,7 +202,7 @@ int	mipng_nfo(mlx_img_list_t *img, unsigned char *dat, png_info_t *pi)
 	  if (b_pos + Z_CHUNK - z_strm.avail_out > img->width*img->height*pi->bpp+img->height)
 	    {
 	      inflateEnd(&z_strm);
-	      return (ERR_nfo_MISMATCH);
+	      return (ERR_DATA_MISMATCH);
 	    }
 	  bcopy(z_out, buffer+b_pos, Z_CHUNK - z_strm.avail_out);
 	  b_pos += Z_CHUNK - z_strm.avail_out;
@@ -213,7 +213,7 @@ int	mipng_nfo(mlx_img_list_t *img, unsigned char *dat, png_info_t *pi)
   if (b_pos != img->width*img->height*pi->bpp+img->height)
     {
       //      printf("pb : bpos %d vs expected %d\n", b_pos, img->width*img->height*pi->bpp+img->height);
-      return (ERR_nfo_MISMATCH);
+      return (ERR_DATA_MISMATCH);
     }
   if ((ret = mipng_fill_img(img, buffer, pi)))
     return (ret);
@@ -345,7 +345,7 @@ int	mipng_verif_hdr(unsigned char *hdr, png_info_t *pi)
 }
 
 
-mlx_img_list_t	*mlx_int_parse_png(mlx_t *xvar, unsigned char *fptr, int size)
+mlx_img_list_t	*mlx_int_parse_png(mlx_ptr_t *xvar, unsigned char *fptr, int size)
 {
   int		err;
   unsigned char *hdr;
@@ -375,7 +375,7 @@ mlx_img_list_t	*mlx_int_parse_png(mlx_t *xvar, unsigned char *fptr, int size)
       warnx("mlx PNG error : Can't create mlx image");
       return ((mlx_img_list_t *)0);
     }
-  if ((err = mipng_nfo(img, dat, &pi)))
+  if ((err = mipng_data(img, dat, &pi)))
     {
       mlx_destroy_image(xvar, img);
       warnx("mlx PNG error : %s", mipng_err[err]);
@@ -387,7 +387,7 @@ mlx_img_list_t	*mlx_int_parse_png(mlx_t *xvar, unsigned char *fptr, int size)
 
 
 
-void	*mlx_png_file_to_image(mlx_t *xvar, char *file, int *width, int *height)
+void	*mlx_png_file_to_image(mlx_ptr_t *xvar, char *file, int *width, int *height)
 {
   int			fd;
   int			size;
