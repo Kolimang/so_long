@@ -27,7 +27,7 @@ enum {
 // usage:
 mlx_hook(vars.win, ON_DESTROY, 0, close, &vars);
 int	mlx_hook(t_win_list *win, int x_event, int x_mask, int (*funct)(),void *param);
-void mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*f)(), void *param)
+void mlx_hook(mlx_win_list_t *windw, int x_event, int x_mask, int (*f)(), void *param)
 
 An Expose event is generated when a window becomes visible or a previously invisible part of a window becomes visible.
 
