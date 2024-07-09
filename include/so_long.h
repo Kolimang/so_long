@@ -22,14 +22,16 @@
 //# include <string.h>
 
 # define TILE_SZ 32
-# define TXPLAYER_R "assets/hero_32_right.xpm"
-# define TXPLAYER_L "assets/hero_32_left.xpm"
-# define TXPLAYER_D "assets/hero_32_down.xpm"
-# define TXPLAYER_U "assets/hero_32_up.xpm"
-# define TXGRASS "assets/grass_32.xpm"
-# define TXROCK "assets/rock_32.xpm"
-# define TXEXIT_C "assets/exit_32_closed.xpm"
-# define TXEXIT_O "assets/exit_32_open.xpm"
+# define GM_NAME "A walk in the park"
+
+# define TXPLAYER_R    "assets/hero_32_right.xpm"
+# define TXPLAYER_L    "assets/hero_32_left.xpm"
+# define TXPLAYER_D    "assets/hero_32_down.xpm"
+# define TXPLAYER_U    "assets/hero_32_up.xpm"
+# define TXGRASS       "assets/grass_32.xpm"
+# define TXROCK        "assets/rock_32.xpm"
+# define TXEXIT_C      "assets/exit_32_closed.xpm"
+# define TXEXIT_O      "assets/exit_32_open.xpm"
 # define TXCOLLECTIBLE "assets/collectible_32.xpm"
 
 # define ERR_MAP0 "Error\nEmpty line in map.\n"

@@ -175,7 +175,7 @@ int	main(int argc, char *argv[])
 	nfo.mlx = mlx_init();
 	if (!nfo.mlx)
 		return (1);
-	nfo.windw = mlx_new_window(nfo.mlx, nfo.winw, nfo.winh, "Adventure in the meadows");
+	nfo.windw = mlx_new_window(nfo.mlx, nfo.winw, nfo.winh, GM_NAME);
 	if (!nfo.windw)
 		return (free(nfo.mlx), 1);
 	mlx_hook(nfo.windw, ON_KEYRELEASE, 0, &on_keypress, &nfo);
