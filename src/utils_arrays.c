@@ -39,4 +39,3 @@ int	array_str_len(char **array)
 	}
 	return (i);
 }
-

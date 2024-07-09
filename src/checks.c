@@ -61,7 +61,7 @@ int	check_lines(t_data *data, char *path)
 		if (line)
 		{
 			data->map->width = line_len(line);
-			if(check_map_line(data, line, i) == 1)
+			if (check_map_line(data, line, i) == 1)
 				return (free(line), 1);
 			free(line);
 			i++;
@@ -90,7 +90,7 @@ int	create_grid(t_data *data, char *path)
 		line = get_next_line(fd);
 		if (line)
 		{
-			data->map->grid[i] = malloc((line_len(line) + 1 ) * sizeof(char));
+			data->map->grid[i] = malloc((line_len(line) + 1) * sizeof(char));
 			if (!data->map->grid[i])
 				return (1);
 			ft_strlcpy(data->map->grid[i], (const char *)line, line_len(line) + 1);
@@ -118,35 +118,47 @@ int	is_wall(char *horiz_edge)
 
 int	floodfill4(t_data *data, int x, int y)
 {
-	char	tile;
-	int		i;
-
-	i = 0;
-	tile = data->map->grid[x][y];
-	if (tile == 'E')
+	if (x >= 0 && x < data->map->width && y >= 0 && y < data->map->height)
 	{
-		if (data->map->nb_collectibles == data->map->nb_collected)
-			return (1);
+		if (data->map->grid[y][x] != '1')
+		{
+			data->map->grid[y][x] = '1';
+			floodfill4(data, x, y - 1);
+			floodfill4(data, x, y + 1);
+			floodfill4(data, x - 1, y);
+			floodfill4(data, x + 1, y);
+		}
 	}
-	else if (tile != '1')
-	{
-		if (tile == 'C')
-			data->map->nb_collected++;
-		tile = '1';
-		i += floodfill4(data, x, y - 1);
-		i += floodfill4(data, x, y + 1);
-		i += floodfill4(data, x - 1, y);
-		i += floodfill4(data, x + 1, y);
-	}
-	if (i)
-		return (1);
 	return (0);
 }
 
 int	is_playable(t_data *data)
 {
 	data->map->nb_collected = 0;
-	return (floodfill4(data, data->map->start_x, data->map->start_y));
+	floodfill4(data, data->map->start_x, data->map->start_y);
+	return (is_fully_flooded(data));
+}
+
+int	is_fully_flooded(t_data *data)
+{
+	int		x;
+	int		y;
+	char	c;
+
+	y = 0;
+	while (y < data->map->height)
+	{
+		x = 0;
+		while (x < data->map->width)
+		{
+			c = data->map->grid[y][x];
+			if (c != '1')
+				return (0);
+			x++;
+		}
+		y++;
+	}
+	return (1);
 }
 
 int	check_grid(t_data *data)
@@ -161,8 +173,8 @@ int	check_grid(t_data *data)
 		return (ft_putstr_fd(ERR_MAP4, 2), 1);
 	else if (!is_wall(data->map->grid[0]) || !is_wall(data->map->grid[data->map->height - 1]))
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
-//	else if (!is_playable(data))
-//		return (ft_putstr_fd(ERR_MAP7, 2), 1);
+	else if (!is_playable(data))
+		return (ft_putstr_fd(ERR_MAP7, 2), 1);
 	return (0);
 }
 
@@ -194,7 +206,11 @@ int	check_map_line(t_data *data, char *map_line, int line_id)
 		if (map_line[i] == 'C')
 			data->map->nb_collectibles++;
 		else if (map_line[i] == 'E')
+		{
 			data->map->nb_exit++;
+			data->map->exit_x = i;
+			data->map->exit_y = line_id;
+		}
 		else if (map_line[i] == 'P')
 		{
 			data->map->nb_player_start++;
@@ -207,16 +223,3 @@ int	check_map_line(t_data *data, char *map_line, int line_id)
 	}
 	return (0);
 }
-
-// check_map_playable()
-//{
-//	return (0);
-//}
-
-/*
-int	check_move(int argc, char **argv)
-{
-	mlx_destroy_window(vars->mlx, vars->win);
-	return (0);
-}
-*/

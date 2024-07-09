@@ -13,7 +13,9 @@
 .PHONY: all clean fclean re
 
 all:
-	@echo "Build libft."
+	@if [ ! -f ./libft.a ]; then \
+		echo "Build libft."; \
+	fi
 	@(cd libft; make all)
 	@(cd ft_printf; make all)
 	@mkdir -p temp ; \

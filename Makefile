@@ -19,8 +19,9 @@ OBJ_DIR  := build/
 
 NAME     := so_long
 CC       := cc
-#CFLAGS   := -I$(INC_DIR) -Wall -Wextra -Werror
-CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -g
+
+#-fsanitize=address
+CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -g -Wall -Wextra -Werror
 
 AR       := ar -cr
 RM       := rm -f
@@ -37,21 +38,23 @@ OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): libft.a libmlx.a $(OBJS)
+	@if [ ! -f ./so_long ]; then \
+		echo "Build $(NAME) program."; \
+	fi
 	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
-#	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -lft -lmlx $(OBJS) -o $@
-#	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit $(OBJS) -o $@
-	@echo "Build $(NAME) program."
+
+libft.a:
+	@(cd include/libftx ; make all)
+
+libmlx.a:
+	@(cd include/mlx ; make all)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@(cd include/libftx ; make all)
-	@(cd include/mlx ; make all)
 	@if [ ! -d $(OBJ_DIR) ]; then \
 		mkdir -p $(OBJ_DIR); \
 	fi
-	@$(CC) $(CFLAGS) -lft -lmlx -c $< -o $@
-#	@$(CC) $(CFLAGS) -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx -c $< -o $@
-#	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@(cd include/libftx ; make clean)

@@ -22,10 +22,14 @@
 //# include <string.h>
 
 # define TILE_SIZE 32
-# define TXPLAYER "assets/player_32_right.xpm"
+# define TXPLAYER_R "assets/player_32_right.xpm"
+# define TXPLAYER_L "assets/player_32_left.xpm"
+# define TXPLAYER_D "assets/player_32_down.xpm"
+# define TXPLAYER_U "assets/player_32_up.xpm"
 # define TXGRASS "assets/grass_32.xpm"
 # define TXROCK "assets/rock_32.xpm"
-# define TXEXIT "assets/exit_32_open.xpm"
+# define TXEXIT_C "assets/exit_32_closed.xpm"
+# define TXEXIT_O "assets/exit_32_open.xpm"
 # define TXCOLLECTIBLE "assets/collectible_32.xpm"
 
 # define ERR_MAP0 "Error\nEmpty line in map.\n"
@@ -60,6 +64,8 @@ typedef struct s_map
 	int		height;
 	int		start_x;
 	int		start_y;
+	int		exit_x;
+	int		exit_y;
 	int		nb_collectibles;
 	int		nb_collected;
 	int		nb_player_start;
@@ -82,7 +88,7 @@ typedef struct s_data
 	int			winh;
 	void		*mlx_ptr; // MLX pointer
 	void		*win_ptr; // MLX window pointer
-	void		*textures[5]; // MLX image pointers (on the stack)
+	void		*textures[9]; // MLX image pointers (on the stack)
 	t_map		*map; // Map pointer (contains map details pref.bly on stack)
 	t_player	*player;
 }	t_data;
@@ -101,8 +107,8 @@ int		array_str_len(char **array);
 void	array_str_free(char **array, int limit);
 int		is_wall(char *horiz_edge);
 int		floodfill4(t_data *data, int x, int y);
-
-void 	move(t_data *data, int new_x, int new_y);
+int		is_fully_flooded(t_data *data);
+void 	move(t_data *data, int new_x, int new_y, int d);
 
 // typedef struct s_data
 // {
