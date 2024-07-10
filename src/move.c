@@ -58,7 +58,8 @@ void	move(t_nfo *nfo, int new_x, int new_y, int d)
 		handle_reached_item(nfo, new_x, new_y);
 	else if (nfo->map->grid[new_y][new_x] == 'E')
 		handle_reached_exit(nfo);
-	nfo->map->grid[new_y][new_x] = 'P';
+	if (nfo->map->grid[new_y][new_x] != 'E')
+		nfo->map->grid[new_y][new_x] = 'P';
 	if (nfo->map->grid[y][x] != 'E')
 		reset_grass(nfo, x, y);
 	else

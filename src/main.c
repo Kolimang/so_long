@@ -24,7 +24,7 @@ int	main(int argc, char *argv[])
 	create_grid(&nfo, argv[1], 0);
 	nfo.mlx = mlx_init();
 	if (!nfo.mlx)
-		return (1);
+		return (free_all(&nfo), 1);
 	create_window(&nfo);
 	if (!nfo.windw)
 		return (free_all(&nfo), 1);
@@ -34,8 +34,7 @@ int	main(int argc, char *argv[])
 	blit_image(&nfo);
 	mlx_loop(nfo.mlx);
 	free_all(&nfo);
-	ft_printf("Ho Ho Ho !\n");
-	return (system("leaks ./so_long"), 0);
+	return (0);
 }
 
 void	free_all(t_nfo *nfo)
