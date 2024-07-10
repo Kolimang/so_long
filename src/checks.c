@@ -76,27 +76,28 @@ int	create_grid(t_nfo *nfo, char *path)
 {
 	int		fd;
 	int		i;
-	char	*line;
+	char	*ln;
 
 	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
 	if (!nfo->map->grid)
 		return (1);
 	nfo->map->grid[nfo->map->height] = NULL;
 	fd = open(path, O_RDWR);
-	line = "";
+	ln = "";
 	i = 0;
-	while (line)
+	while (ln)
 	{
-		line = get_next_line(fd);
-		if (line)
+		ln = get_next_line(fd);
+		if (ln)
 		{
-			nfo->map->grid[i] = malloc((line_len(line) + 1) * sizeof(char));
+			nfo->map->grid[i] = malloc((line_len(ln) + 1) * sizeof(char));
 			if (!nfo->map->grid[i])
+				// je dois free les eventuelles lignes precedemment allouees ici
 				return (1);
-			ft_strlcpy(nfo->map->grid[i], (const char *)line, line_len(line) + 1);
-			nfo->map->grid[i][line_len(line)] = '\0';
+			ft_strlcpy(nfo->map->grid[i], (const char *)ln, line_len(ln) + 1);
+			nfo->map->grid[i][line_len(ln)] = '\0';
 			i++;
-			free(line);
+			free(ln);
 		}
 	}
 	close(fd);
@@ -152,7 +153,7 @@ int	is_fully_flooded(t_nfo *nfo)
 		while (x < nfo->map->width)
 		{
 			c = nfo->map->grid[y][x];
-			if (c != '1')
+			if (c != '1' && c != '0')
 				return (0);
 			x++;
 		}
@@ -171,7 +172,9 @@ int	check_grid(t_nfo *nfo)
 		return (ft_putstr_fd(ERR_MAP3, 2), 1);
 	else if (nfo->map->nb_player_start != 1)
 		return (ft_putstr_fd(ERR_MAP4, 2), 1);
-	else if (!is_wall(nfo->map->grid[0]) || !is_wall(nfo->map->grid[nfo->map->height - 1]))
+	else if (!is_wall(nfo->map->grid[0]))
+		return (ft_putstr_fd(ERR_MAP5, 2), 1);
+	else if (!is_wall(nfo->map->grid[nfo->map->height - 1]))
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
 	else if (!is_playable(nfo))
 		return (ft_putstr_fd(ERR_MAP7, 2), 1);

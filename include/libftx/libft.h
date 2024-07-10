@@ -15,8 +15,9 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 
-// ------------------------------ FT_PRINTF -----------------------------------
+// ------------------------------ FT_PRINTF ------------------------------------
 
 # include <stdarg.h>
 
@@ -38,12 +39,11 @@ ssize_t	ft_putunsnbr_base(unsigned long int ulnbr, char *base);
 int		ft_nbrlen_base(long long int nb, int radix);
 int		ft_unsnbrlen_base(unsigned long int nb, int radix);
 
-// --------------------------------- GNL --------------------------------------
+// --------------------------------- GNL ---------------------------------------
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 19
 # endif
-# include <limits.h>
 
 int		del(char **str);
 char	*ft_strchr(const char *s, int c);
@@ -53,7 +53,7 @@ char	*ft_gnl_strjoin(char **s1, char **s2, int free_param);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_gnl_strdup(char **s);
 
-// -------------------------------- LIBFT -------------------------------------
+// -------------------------------- LIBFT --------------------------------------
 
 typedef struct s_list
 {

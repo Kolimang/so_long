@@ -19,13 +19,13 @@
 # include <fcntl.h>
 # include <unistd.h>
 
-# define TILE_SZ 32
+# define TIL_SZ 32
 # define GM_NAME "A walk in the park"
 
-# define TXPLAYER_R    "assets/hero_32_right.xpm"
-# define TXPLAYER_L    "assets/hero_32_left.xpm"
-# define TXPLAYER_D    "assets/hero_32_down.xpm"
-# define TXPLAYER_U    "assets/hero_32_up.xpm"
+# define TXPLAYER_R    "assets/player_32_right.xpm"
+# define TXPLAYER_L    "assets/player_32_left.xpm"
+# define TXPLAYER_D    "assets/player_32_down.xpm"
+# define TXPLAYER_U    "assets/player_32_up.xpm"
 # define TXGRASS       "assets/grass_32.xpm"
 # define TXROCK        "assets/rock_32.xpm"
 # define TXEXIT_C      "assets/exit_32_closed.xpm"
@@ -108,6 +108,7 @@ void	array_str_free(char **array, int limit);
 int		is_wall(char *horiz_edge);
 int		floodfill4(t_nfo *nfo, int x, int y);
 int		is_fully_flooded(t_nfo *nfo);
-void 	move(t_nfo *nfo, int new_x, int new_y, int d);
+int		put_img_2_window(t_nfo *nfo, int gfxid, int x, int y);
+void	move(t_nfo *nfo, int new_x, int new_y, int d);
 
 #endif
