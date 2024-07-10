@@ -20,13 +20,12 @@ OBJ_DIR  := build/
 NAME     := so_long
 CC       := cc
 
-#-fsanitize=address
-CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -g -Wall -Wextra -Werror
+CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -g -Wall -Wextra -Werror -fsanitize=address
+MLXFLAGS := -framework OpenGL -framework AppKit -L$(INC_DIR)/mlx -lmlx
 
 AR       := ar -cr
 RM       := rm -f
 
-# 			use space or backslash as separator to add more
 FILES    := main check_lines check_map check_map2 check_path flood_fill graphics init move utils_arrays
 
 SRCS     := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
@@ -42,7 +41,7 @@ $(NAME): libft.a libmlx.a $(OBJS)
 	@if [ ! -f ./so_long ]; then \
 		echo "Build $(NAME) program."; \
 	fi
-	@$(CC) $(CFLAGS) -g -framework OpenGL -framework AppKit -L$(INC_DIR)/libftx -lft -L$(INC_DIR)/mlx -lmlx $(OBJS) -o $@
+	@$(CC) $(CFLAGS) $(MLXFLAGS) -L$(INC_DIR)/libftx -lft $(OBJS) -o $@
 
 libft.a:
 	@(cd include/libftx ; make all)
