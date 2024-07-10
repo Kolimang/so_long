@@ -72,10 +72,9 @@ int	check_lines(t_nfo *nfo, char *path)
 	return (0);
 }
 
-int	create_grid(t_nfo *nfo, char *path)
+int	create_grid(t_nfo *nfo, char *path, int i)
 {
 	int		fd;
-	int		i;
 	char	*ln;
 
 	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
@@ -84,7 +83,6 @@ int	create_grid(t_nfo *nfo, char *path)
 	nfo->map->grid[nfo->map->height] = NULL;
 	fd = open(path, O_RDWR);
 	ln = "";
-	i = 0;
 	while (ln)
 	{
 		ln = get_next_line(fd);
@@ -92,8 +90,7 @@ int	create_grid(t_nfo *nfo, char *path)
 		{
 			nfo->map->grid[i] = malloc((line_len(ln) + 1) * sizeof(char));
 			if (!nfo->map->grid[i])
-				// je dois free les eventuelles lignes precedemment allouees ici
-				return (1);
+				return (array_str_free(nfo->map->grid, i), 1);
 			ft_strlcpy(nfo->map->grid[i], (const char *)ln, line_len(ln) + 1);
 			nfo->map->grid[i][line_len(ln)] = '\0';
 			i++;
@@ -164,6 +161,8 @@ int	is_fully_flooded(t_nfo *nfo)
 
 int	check_grid(t_nfo *nfo)
 {
+	int	i;
+
 	if (nfo->map->height > 44 || nfo->map->width > 80)
 		return (ft_putstr_fd(ERR_MAP1, 2), 1);
 	else if (nfo->map->nb_collectibles < 1)
@@ -178,6 +177,13 @@ int	check_grid(t_nfo *nfo)
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
 	else if (!is_playable(nfo))
 		return (ft_putstr_fd(ERR_MAP7, 2), 1);
+	i = 0;
+	while (i < nfo->map->height)
+	{
+		if ((int)ft_strlen(nfo->map->grid[i]) != nfo->map->width)
+			return (ft_putstr_fd(ERR_MAP8, 2), 1);
+		i++;
+	}
 	return (0);
 }
 
@@ -209,20 +215,26 @@ int	check_map_line(t_nfo *nfo, char *map_line, int line_id)
 		if (map_line[i] == 'C')
 			nfo->map->nb_collectibles++;
 		else if (map_line[i] == 'E')
-		{
-			nfo->map->nb_exit++;
-			nfo->map->exit_x = i;
-			nfo->map->exit_y = line_id;
-		}
+			set_exit_nfo(nfo, i, line_id);
 		else if (map_line[i] == 'P')
-		{
-			nfo->map->nb_player_start++;
-			nfo->map->start_x = i;
-			nfo->map->start_y = line_id;
-		}
+			set_player_nfo(nfo, i, line_id);
 		else if (map_line[i] != '0' && map_line[i] != '1')
 			return (ft_putstr_fd(ERR_MAP6, 2), 1);
 		i++;
 	}
 	return (0);
+}
+
+void	set_exit_nfo(t_nfo *nfo, int x, int y)
+{
+	nfo->map->nb_exit++;
+	nfo->map->exit_x = x;
+	nfo->map->exit_y = y;
+}
+
+void	set_player_nfo(t_nfo *nfo, int x, int y)
+{
+	nfo->map->nb_player_start++;
+	nfo->map->start_x = x;
+	nfo->map->start_y = y;
 }

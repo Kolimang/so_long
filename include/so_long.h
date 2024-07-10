@@ -40,6 +40,7 @@
 # define ERR_MAP5 "Error\nThere must be walls (1) all around the map.\n"
 # define ERR_MAP6 "Error\nInvalid charachter in map.\n"
 # define ERR_MAP7 "Error\nMap is not playable (no valid path).\n"
+# define ERR_MAP8 "Error\nMap is not rectangular.\n"
 
 enum
 {
@@ -98,7 +99,7 @@ int		line_len(char *s);
 int		check_input(int argc, char **argv);
 int		check_lines(t_nfo *nfo, char *path);
 int		check_map_line(t_nfo *nfo, char *map_line, int line_id);
-int		create_grid(t_nfo *nfo, char *path);
+int		create_grid(t_nfo *nfo, char *path, int i);
 int		check_grid(t_nfo *nfo);
 int		is_playable(t_nfo *nfo);
 void	load_textures(t_nfo *nfo);
@@ -110,5 +111,7 @@ int		floodfill4(t_nfo *nfo, int x, int y);
 int		is_fully_flooded(t_nfo *nfo);
 int		put_img_2_window(t_nfo *nfo, int gfxid, int x, int y);
 void	move(t_nfo *nfo, int new_x, int new_y, int d);
+void	set_exit_nfo(t_nfo *nfo, int x, int y);
+void	set_player_nfo(t_nfo *nfo, int x, int y);
 
 #endif

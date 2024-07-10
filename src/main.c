@@ -170,10 +170,10 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (check_lines(&nfo, argv[1]) == 1)
 		return (1);
-	create_grid(&nfo, argv[1]);
+	create_grid(&nfo, argv[1], 0);
 	if (check_grid(&nfo) == 1)
 		return (array_str_free(nfo.map->grid, array_str_len(nfo.map->grid)), 1);
-	create_grid(&nfo, argv[1]);
+	create_grid(&nfo, argv[1], 0);
 	nfo.hero->x = nfo.map->start_x;
 	nfo.hero->y = nfo.map->start_y;
 	nfo.winw = nfo.map->width * TIL_SZ;
