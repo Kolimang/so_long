@@ -27,7 +27,7 @@ AR       := ar -cr
 RM       := rm -f
 
 # 			use space or backslash as separator to add more
-FILES    := main checks utils_arrays
+FILES    := main check_lines check_map check_map2 check_path flood_fill graphics init move utils_arrays
 
 SRCS     := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
