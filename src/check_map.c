@@ -85,8 +85,6 @@ int	is_fully_flooded(t_nfo *nfo)
 
 int	check_grid(t_nfo *nfo)
 {
-	int	i;
-
 	if (nfo->map->height > 44 || nfo->map->width > 80)
 		return (ft_putstr_fd(ERR_MAP1, 2), 1);
 	else if (nfo->map->nb_collectibles < 1)
