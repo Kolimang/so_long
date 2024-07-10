@@ -26,3 +26,17 @@ int	is_map_valid(t_nfo *nfo, int argc, char **argv)
 	}
 	return (1);
 }
+
+int	is_rectangular(t_nfo *nfo)
+{
+	int	i;
+
+	i = 0;
+	while (i < nfo->map->height)
+	{
+		if ((int)ft_strlen(nfo->map->grid[i]) != nfo->map->width)
+			return (0);
+		i++;
+	}
+	return (1);
+}

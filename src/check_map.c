@@ -101,12 +101,7 @@ int	check_grid(t_nfo *nfo)
 		return (ft_putstr_fd(ERR_MAP5, 2), 1);
 	else if (!is_playable(nfo))
 		return (ft_putstr_fd(ERR_MAP7, 2), 1);
-	i = 0;
-	while (i < nfo->map->height)
-	{
-		if ((int)ft_strlen(nfo->map->grid[i]) != nfo->map->width)
-			return (ft_putstr_fd(ERR_MAP8, 2), 1);
-		i++;
-	}
+	else if (!is_rectangular(nfo))
+		return (ft_putstr_fd(ERR_MAP8, 2), 1);
 	return (0);
 }
