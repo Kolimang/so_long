@@ -20,7 +20,7 @@ OBJ_DIR  := build/
 NAME     := so_long
 CC       := cc
 
-CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -g -Wall -Wextra -Werror -fsanitize=address
+CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -Wall -Wextra -Werror
 MLXFLAGS := -framework OpenGL -framework AppKit -L$(INC_DIR)/mlx -lmlx
 
 AR       := ar -cr
