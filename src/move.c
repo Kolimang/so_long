@@ -78,13 +78,13 @@ void	move(t_nfo *nfo, int new_x, int new_y, int d)
 */
 int	on_keypress(int key, t_nfo *nfo)
 {
-	if (key == 123)
+	if (key == 0 || key == 12 || key == 123)
 		move(nfo, -1, 0, 6);
-	else if (key == 124)
+	else if (key == 2 || key == 124)
 		move(nfo, 1, 0, 5);
-	else if (key == 125)
+	else if (key == 1 || key == 125)
 		move(nfo, 0, 1, 7);
-	else if (key == 126)
+	else if (key == 6 || key == 13 || key == 126)
 		move(nfo, 0, -1, 8);
 	else if (key == 53)
 	{
