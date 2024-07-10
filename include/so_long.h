@@ -116,7 +116,7 @@ void	set_exit_nfo(t_nfo *nfo, int x, int y);
 void	set_player_nfo(t_nfo *nfo, int x, int y);
 void	create_window(t_nfo *nfo);
 void	free_all(t_nfo *nfo);
-void	blit_image(t_nfo *nfo);
+void	blit_map(t_nfo *nfo);
 int		on_destroy(t_nfo *nfo);
 int		on_keypress(int key, t_nfo *nfo);
 void	reset_grass(t_nfo *nfo, int x, int y);

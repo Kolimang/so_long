@@ -33,7 +33,7 @@ int	put_img_2_window(t_nfo *nfo, int gfxid, int x, int y)
 	return (0);
 }
 
-void	blit_image(t_nfo *nfo)
+void	blit_map(t_nfo *nfo)
 {
 	int		x;
 	int		y;

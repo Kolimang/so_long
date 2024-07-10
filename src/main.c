@@ -31,7 +31,7 @@ int	main(int argc, char *argv[])
 	mlx_hook(nfo.windw, ON_KEYRELEASE, 0, &on_keypress, &nfo);
 	mlx_hook(nfo.windw, ON_DESTROY, 0, &on_destroy, &nfo);
 	load_textures(&nfo);
-	blit_image(&nfo);
+	blit_map(&nfo);
 	mlx_loop(nfo.mlx);
 	free_all(&nfo);
 	return (0);
