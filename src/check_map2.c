@@ -24,6 +24,7 @@ int	is_map_valid(t_nfo *nfo, int argc, char **argv)
 		array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
 		return (0);
 	}
+	array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
 	return (1);
 }
 
