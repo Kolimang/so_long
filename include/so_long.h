@@ -112,14 +112,14 @@ int		is_map_valid(t_nfo *nfo, int argc, char **argv);
 int		floodfill4(t_nfo *nfo, int x, int y);
 int		is_fully_flooded(t_nfo *nfo);
 int		put_img_2_window(t_nfo *nfo, int gfxid, int x, int y);
+int		on_keypress(int key, t_nfo *nfo);
+int		on_destroy(t_nfo *nfo);
+void	free_all(t_nfo *nfo);
 void	move(t_nfo *nfo, int new_x, int new_y, int d);
 void	set_exit_nfo(t_nfo *nfo, int x, int y);
 void	set_player_nfo(t_nfo *nfo, int x, int y);
 void	create_window(t_nfo *nfo);
-void	free_all(t_nfo *nfo);
 void	blit_map(t_nfo *nfo);
-int		on_destroy(t_nfo *nfo);
-int		on_keypress(int key, t_nfo *nfo);
 void	reset_grass(t_nfo *nfo, int x, int y);
 
 #endif

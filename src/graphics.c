@@ -12,13 +12,6 @@
 
 #include <so_long.h>
 
-int	on_destroy(t_nfo *nfo)
-{
-	mlx_destroy_window(nfo->mlx, nfo->windw);
-	free_all(nfo);
-	exit(0);
-}
-
 void	create_window(t_nfo *nfo)
 {
 	nfo->winw = nfo->map->width * TIL_SZ;

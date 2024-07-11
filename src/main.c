@@ -42,3 +42,10 @@ void	free_all(t_nfo *nfo)
 	array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
 	free(nfo->mlx);
 }
+
+int	on_destroy(t_nfo *nfo)
+{
+	mlx_destroy_window(nfo->mlx, nfo->windw);
+	free_all(nfo);
+	exit(0);
+}
