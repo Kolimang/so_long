@@ -28,8 +28,6 @@ void	handle_reached_exit(t_nfo *nfo)
 		ft_printf("Well done! ");
 		ft_printf("You exited the level in %d moves.\n", nfo->hero->moves);
 		ft_printf("~~ The End ~~\n");
-		array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
-		nfo->map->grid = NULL;
 		on_destroy(nfo);
 	}
 }
@@ -53,6 +51,8 @@ void	move(t_nfo *nfo, int new_x, int new_y, int d)
 	if (nfo->map->grid[new_y][new_x] == '1')
 		return ;
 	nfo->hero->moves++;
+	if (nfo->hero->moves < 0)
+		on_destroy(nfo);
 	ft_printf("moves: %d\n", nfo->hero->moves);
 	if (nfo->map->grid[new_y][new_x] == 'C')
 		handle_reached_item(nfo, new_x, new_y);
