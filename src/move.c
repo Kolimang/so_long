@@ -62,19 +62,20 @@ void	move(t_nfo *nfo, int new_x, int new_y, int d)
 		nfo->map->grid[new_y][new_x] = 'P';
 	if (nfo->map->grid[y][x] != 'E')
 		reset_grass(nfo, x, y);
-	else
+	else if (nfo->hero->nb_collected != nfo->map->nb_collectibles)
 		put_img_2_window(nfo, 3, x, y);
 	update_player_position(nfo, d, new_x, new_y);
 }
 
 /*
-			  ^
-			  |
-			key 126
-<-- key 123			key 124 -->
-			key 125
-			  |
-			  v
+Movement keys :
+					^
+					|
+				6, 13, 126
+<-- 0, 12, 123				2, 124 -->
+				  1, 125
+					|
+					v
 */
 int	on_keypress(int key, t_nfo *nfo)
 {
