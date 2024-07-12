@@ -44,7 +44,7 @@ int	create_grid(t_nfo *nfo, char *path, int i)
 int	is_wall(char *horiz_edge)
 {
 	if (!horiz_edge)
-		return (-1);
+		return (0);
 	while (*horiz_edge)
 	{
 		if (*horiz_edge != '1')
