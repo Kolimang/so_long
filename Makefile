@@ -23,7 +23,6 @@ CC       := cc
 CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -Wall -Wextra -Werror -g
 MLXFLAGS := -framework OpenGL -framework AppKit -L$(INC_DIR)/mlx -lmlx
 
-AR       := ar -cr
 RM       := rm -f
 
 FILES    := main check_lines check_map check_map2 check_path flood_fill graphics init move utils_arrays
@@ -37,11 +36,16 @@ OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
-$(NAME): libft.a libmlx.a $(OBJS)
+$(NAME): libft.a libmlx.a $(OBJ_DIR) $(OBJS)
 	@if [ ! -f ./so_long ]; then \
 		echo "Build $(NAME) program."; \
 	fi
 	@$(CC) $(CFLAGS) $(MLXFLAGS) -L$(INC_DIR)/libftx -lft $(OBJS) -o $@
+
+$(OBJ_DIR):
+	@if [ ! -d $(OBJ_DIR) ]; then \
+		mkdir -p $(OBJ_DIR); \
+	fi
 
 libft.a:
 	@(cd include/libftx ; make all)
@@ -50,9 +54,6 @@ libmlx.a:
 	@(cd include/mlx ; make all)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@if [ ! -d $(OBJ_DIR) ]; then \
-		mkdir -p $(OBJ_DIR); \
-	fi
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
