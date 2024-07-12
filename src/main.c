@@ -28,7 +28,7 @@ int	main(int argc, char *argv[])
 	create_window(&nfo);
 	if (!nfo.windw)
 		return (free_all(&nfo), 1);
-	mlx_hook(nfo.windw, ON_KEYRELEASE, 0, &on_keypress, &nfo);
+	mlx_hook(nfo.windw, ON_KEYPRESS, 0, &on_keypress, &nfo);
 	mlx_hook(nfo.windw, ON_DESTROY, 0, &on_destroy, &nfo);
 	load_textures(&nfo);
 	blit_map(&nfo);
