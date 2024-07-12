@@ -14,7 +14,7 @@
 
 int	is_map_valid(t_nfo *nfo, int argc, char **argv)
 {
-	if (check_input(argc, argv) == 1)
+	if (!is_valid_path(argc, argv))
 		return (0);
 	if (check_lines(nfo, argv[1]) == 1)
 		return (0);
