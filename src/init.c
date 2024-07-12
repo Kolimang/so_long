@@ -24,6 +24,8 @@ int	init_structures(t_nfo *nfo, t_map *map, t_player *hero)
 	nfo->map->nb_player_start = 0;
 	nfo->map->nb_collectibles = 0;
 	nfo->map->valid = 0;
+	nfo->map->width = 0;
+	nfo->map->height = 0;
 	return (0);
 }
 
