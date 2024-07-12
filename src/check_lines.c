@@ -31,6 +31,8 @@ int	check_lines(t_nfo *nfo, char *path)
 	char	*line;
 
 	fd = open(path, O_RDWR);
+	if (fd < 0)
+		return (1);
 	line = "";
 	i = 0;
 	while (line)
