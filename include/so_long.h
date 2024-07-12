@@ -53,12 +53,6 @@ enum
 	ON_DESTROY = 17
 };
 
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-}				t_vars;
-
 typedef struct s_map
 {
 	int		width;
