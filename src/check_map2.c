@@ -16,9 +16,8 @@ int	is_map_valid(t_nfo *nfo, int argc, char **argv)
 {
 	if (!is_valid_path(argc, argv))
 		return (0);
-	if (check_lines(nfo, argv[1]) == 1)
+	if (check_lines(nfo, argv[1]) || create_grid(nfo, argv[1], 0))
 		return (0);
-	create_grid(nfo, argv[1], 0);
 	if (check_grid(nfo) == 1)
 	{
 		array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));

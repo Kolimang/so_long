@@ -18,21 +18,25 @@ int	create_grid(t_nfo *nfo, char *path, int i)
 	char	*ln;
 
 	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
-	if (!nfo->map->grid)
+	fd = open(path, O_RDWR);
+	if (!nfo->map->grid || fd < 0)
 		return (1);
 	nfo->map->grid[nfo->map->height] = NULL;
-	fd = open(path, O_RDWR);
 	ln = "";
 	while (ln)
 	{
-		ln = get_next_line(fd);
-		if (ln)
+		//ln = get_next_line(fd);
+		//if (ln)
+		if (ln = get_next_line(fd))
 		{
 			nfo->map->grid[i] = malloc((line_len(ln) + 1) * sizeof(char));
 			if (!nfo->map->grid[i])
-				return (array_str_free(nfo->map->grid, i), 1);
+			{
+				close(fd);
+				return (free(ln), array_str_free(nfo->map->grid, i), 1);
+			}
 			ft_strlcpy(nfo->map->grid[i], (const char *)ln, line_len(ln) + 1);
-			nfo->map->grid[i][line_len(ln)] = '\0';
+			//nfo->map->grid[i][line_len(ln)] = '\0';
 			i++;
 			free(ln);
 		}
