@@ -19,9 +19,8 @@ int	main(int argc, char *argv[])
 	t_player	hero;
 
 	init_structures(&nfo, &map, &hero);
-	if (!is_map_valid(&nfo, argc, argv))
+	if (!is_map_valid(&nfo, argc, argv) || create_grid(&nfo, argv[1], 0))
 		return (1);
-	create_grid(&nfo, argv[1], 0);
 	nfo.mlx = mlx_init();
 	if (!nfo.mlx)
 		return (free_all(&nfo), 1);
