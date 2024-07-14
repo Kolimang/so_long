@@ -29,9 +29,10 @@ int	init_structures(t_nfo *nfo, t_map *map, t_player *hero)
 	return (0);
 }
 
-void	load_textures(t_nfo *nfo)
+int	load_textures(t_nfo *nfo)
 {
 	int	size;
+	int	i;
 
 	size = TIL_SZ;
 	nfo->gfx[0] = mlx_xpm_file_to_image(nfo->mlx, TXGRASS, &size, &size);
@@ -43,4 +44,12 @@ void	load_textures(t_nfo *nfo)
 	nfo->gfx[6] = mlx_xpm_file_to_image(nfo->mlx, TXPLAYER_L, &size, &size);
 	nfo->gfx[7] = mlx_xpm_file_to_image(nfo->mlx, TXPLAYER_D, &size, &size);
 	nfo->gfx[8] = mlx_xpm_file_to_image(nfo->mlx, TXPLAYER_U, &size, &size);
+	i = 0;
+	while (i < 9)
+	{
+		if (!nfo->gfx[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

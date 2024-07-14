@@ -95,7 +95,7 @@ int		check_lines(t_nfo *nfo, char *path);
 int		check_map_line(t_nfo *nfo, char *map_line, int line_id);
 int		create_grid(t_nfo *nfo, char *path, int i);
 int		check_grid(t_nfo *nfo);
-void	load_textures(t_nfo *nfo);
+int		load_textures(t_nfo *nfo);
 void	array_str_print(char **array, char separator);
 int		array_str_len(char **array);
 void	array_str_free(char **array, int limit);

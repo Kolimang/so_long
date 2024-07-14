@@ -29,7 +29,8 @@ int	main(int argc, char *argv[])
 		return (free_all(&nfo), 1);
 	mlx_hook(nfo.windw, ON_KEYPRESS, 0, &on_keypress, &nfo);
 	mlx_hook(nfo.windw, ON_DESTROY, 0, &on_destroy, &nfo);
-	load_textures(&nfo);
+	if (load_textures(&nfo))
+		return (free_all(&nfo), 1);
 	blit_map(&nfo);
 	mlx_loop(nfo.mlx);
 	free_all(&nfo);
