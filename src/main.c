@@ -24,9 +24,11 @@ int	main(int argc, char *argv[])
 	nfo.mlx = mlx_init();
 	if (!nfo.mlx)
 		return (free_all(&nfo), 1);
-	create_window(&nfo);
-	if (!nfo.windw)
-		return (free_all(&nfo), 1);
+	if (create_window(&nfo))
+	{
+		free_all(&nfo);
+		return (1);
+	}
 	mlx_hook(nfo.windw, ON_KEYPRESS, 0, &on_keypress, &nfo);
 	mlx_hook(nfo.windw, ON_DESTROY, 0, &on_destroy, &nfo);
 	if (load_textures(&nfo))
