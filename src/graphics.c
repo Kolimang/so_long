@@ -12,11 +12,14 @@
 
 #include <so_long.h>
 
-void	create_window(t_nfo *nfo)
+int	create_window(t_nfo *nfo)
 {
 	nfo->winw = nfo->map->width * TIL_SZ;
 	nfo->winh = nfo->map->height * TIL_SZ;
 	nfo->windw = mlx_new_window(nfo->mlx, nfo->winw, nfo->winh, GM_NAME);
+	if (!(nfo->windw))
+		return (1);
+	return (0);
 }
 
 int	put_img_2_window(t_nfo *nfo, int gfxid, int x, int y)
