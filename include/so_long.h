@@ -93,6 +93,8 @@ int		line_len(char *s);
 int		is_valid_path(int argc, char **argv);
 int		check_lines(t_nfo *nfo, char *path);
 int		check_map_line(t_nfo *nfo, char *map_line, int line_id);
+int		alloc_grid(t_nfo *nfo);
+int		fill_grid(t_nfo *nfo, char *path, int i);
 int		create_grid(t_nfo *nfo, char *path, int i);
 int		check_grid(t_nfo *nfo);
 int		load_textures(t_nfo *nfo);

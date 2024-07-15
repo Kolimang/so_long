@@ -12,22 +12,50 @@
 
 #include <so_long.h>
 
+int	is_map_valid(t_nfo *nfo, int argc, char **argv)
+{
+	if (!is_valid_path(argc, argv))
+		return (0);
+	if (check_lines(nfo, argv[1]) || create_grid(nfo, argv[1], 0))
+		return (0);
+	if (check_grid(nfo) == 1)
+	{
+		array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
+		return (0);
+	}
+	array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
+	return (1);
+}
+
+int	alloc_grid(t_nfo *nfo)
+{
+	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
+	if (!nfo->map->grid)
+		return (1);
+	nfo->map->grid[nfo->map->height] = NULL;
+	return (0);
+}
+
 int	create_grid(t_nfo *nfo, char *path, int i)
+{
+	if (alloc_grid(nfo) || fill_grid(nfo, path, i))
+		return (1);
+	return (0);
+}
+
+int	fill_grid(t_nfo *nfo, char *path, int i)
 {
 	int		fd;
 	char	*ln;
 
-	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
 	fd = open(path, O_RDWR);
-	if (!nfo->map->grid || fd < 0)
+	if (fd < 0)
 		return (1);
-	nfo->map->grid[nfo->map->height] = NULL;
 	ln = "";
 	while (ln)
 	{
-		//ln = get_next_line(fd);
-		//if (ln)
-		if (ln = get_next_line(fd))
+		ln = get_next_line(fd);
+		if (ln)
 		{
 			nfo->map->grid[i] = malloc((line_len(ln) + 1) * sizeof(char));
 			if (!nfo->map->grid[i])
@@ -36,7 +64,6 @@ int	create_grid(t_nfo *nfo, char *path, int i)
 				return (free(ln), array_str_free(nfo->map->grid, i), 1);
 			}
 			ft_strlcpy(nfo->map->grid[i], (const char *)ln, line_len(ln) + 1);
-			//nfo->map->grid[i][line_len(ln)] = '\0';
 			i++;
 			free(ln);
 		}
@@ -44,48 +71,7 @@ int	create_grid(t_nfo *nfo, char *path, int i)
 	close(fd);
 	return (0);
 }
-
-int	is_wall(char *horiz_edge)
-{
-	if (!horiz_edge)
-		return (0);
-	while (*horiz_edge)
-	{
-		if (*horiz_edge != '1')
-			return (0);
-		horiz_edge++;
-	}
-	return (1);
-}
-
-int	is_playable(t_nfo *nfo)
-{
-	nfo->map->nb_collected = 0;
-	floodfill4(nfo, nfo->map->start_x, nfo->map->start_y);
-	return (is_fully_flooded(nfo));
-}
-
-int	is_fully_flooded(t_nfo *nfo)
-{
-	int		x;
-	int		y;
-	char	c;
-
-	y = 0;
-	while (y < nfo->map->height)
-	{
-		x = 0;
-		while (x < nfo->map->width)
-		{
-			c = nfo->map->grid[y][x];
-			if (c != '1' && c != '0')
-				return (0);
-			x++;
-		}
-		y++;
-	}
-	return (1);
-}
+// right below the strlcpy : //nfo->map->grid[i][line_len(ln)] = '\0';
 
 int	check_grid(t_nfo *nfo)
 {

@@ -12,18 +12,45 @@
 
 #include <so_long.h>
 
-int	is_map_valid(t_nfo *nfo, int argc, char **argv)
+int	is_wall(char *horiz_edge)
 {
-	if (!is_valid_path(argc, argv))
+	if (!horiz_edge)
 		return (0);
-	if (check_lines(nfo, argv[1]) || create_grid(nfo, argv[1], 0))
-		return (0);
-	if (check_grid(nfo) == 1)
+	while (*horiz_edge)
 	{
-		array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
-		return (0);
+		if (*horiz_edge != '1')
+			return (0);
+		horiz_edge++;
 	}
-	array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
+	return (1);
+}
+
+int	is_playable(t_nfo *nfo)
+{
+	nfo->map->nb_collected = 0;
+	floodfill4(nfo, nfo->map->start_x, nfo->map->start_y);
+	return (is_fully_flooded(nfo));
+}
+
+int	is_fully_flooded(t_nfo *nfo)
+{
+	int		x;
+	int		y;
+	char	c;
+
+	y = 0;
+	while (y < nfo->map->height)
+	{
+		x = 0;
+		while (x < nfo->map->width)
+		{
+			c = nfo->map->grid[y][x];
+			if (c != '1' && c != '0')
+				return (0);
+			x++;
+		}
+		y++;
+	}
 	return (1);
 }
 
