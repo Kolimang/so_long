@@ -48,7 +48,7 @@ int	load_textures(t_nfo *nfo)
 	while (i < 9)
 	{
 		if (!nfo->gfx[i])
-			return (1);
+			return (ft_putstr_fd("Error when loading texture.\n", 2), 1);
 		i++;
 	}
 	return (0);
