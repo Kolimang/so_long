@@ -31,7 +31,7 @@ int	alloc_grid(t_nfo *nfo)
 {
 	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
 	if (!nfo->map->grid)
-		return (1);
+		return(ft_putstr_fd("Memory allocation failed.\n", 2), 1);
 	nfo->map->grid[nfo->map->height] = NULL;
 	return (0);
 }
@@ -71,7 +71,6 @@ int	fill_grid(t_nfo *nfo, char *path, int i)
 	close(fd);
 	return (0);
 }
-// right below the strlcpy : //nfo->map->grid[i][line_len(ln)] = '\0';
 
 int	check_grid(t_nfo *nfo)
 {
