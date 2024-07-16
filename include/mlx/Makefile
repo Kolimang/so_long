@@ -14,6 +14,7 @@ CFLAGS+= -DSTRINGPUTX11
 all: $(NOM)
 
 $(NOM):	$(OBJ)
+	@echo "Build mlx."
 	@ar -r $(NOM) $(OBJ) > /dev/null 2>&1
 	@ranlib $(NOM)
 
@@ -26,5 +27,6 @@ $(NOM):	$(OBJ)
 clean:
 	@rm -f $(NOM) $(OBJ) *~
 	@rm -f mlx_app
+	@echo "Delete mlx."
 
 re: clean all
