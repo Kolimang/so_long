@@ -31,7 +31,7 @@ int	alloc_grid(t_nfo *nfo)
 {
 	nfo->map->grid = malloc((nfo->map->height + 1) * sizeof(char *));
 	if (!nfo->map->grid)
-		return(ft_putstr_fd("Memory allocation failed.\n", 2), 1);
+		return (ft_putstr_fd("Memory allocation failed.\n", 2), 1);
 	nfo->map->grid[nfo->map->height] = NULL;
 	return (0);
 }
