@@ -27,7 +27,8 @@ MLXFLAGS := -framework OpenGL -framework AppKit -L$(INC_DIR)/mlx -lmlx
 
 RM       := rm -f
 
-FILES    := main check_lines check_map check_map2 check_path flood_fill graphics init move utils_arrays
+FILES    := main check_lines check_map check_map2 check_path flood_fill \
+			graphics init move utils_arrays
 
 SRCS     := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
