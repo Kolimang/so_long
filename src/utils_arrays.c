@@ -22,8 +22,10 @@ void	array_str_free(char **array, int limit)
 	while (++i < limit)
 	{
 		free(array[i]);
+		array[i] = NULL;
 	}
 	free(array);
+	array = NULL;
 }
 
 int	array_str_len(char **array)
