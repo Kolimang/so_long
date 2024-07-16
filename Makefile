@@ -12,15 +12,17 @@
 
 # ------------------------------- VARIABLES ------------------------------------
 
-ROOT_DIR := $(realpath .)
-INC_DIR  := $(ROOT_DIR)/include
-SRC_DIR  := src/
-OBJ_DIR  := build/
+ROOT_DIR  := $(realpath .)
+INC_DIR   := $(ROOT_DIR)/include
+SRC_DIR   := src/
+OBJ_DIR   := build/
+LIBFT_DIR := $(INC_DIR)/libftx
+MLX_DIR   := $(INC_DIR)/mlx
 
 NAME     := so_long
 CC       := cc
 
-CFLAGS   := -I$(INC_DIR) -I$(INC_DIR)/libftx -I$(INC_DIR)/mlx -Wall -Wextra -Werror -g
+CFLAGS   := -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR) -Wall -Wextra -Werror -g
 MLXFLAGS := -framework OpenGL -framework AppKit -L$(INC_DIR)/mlx -lmlx
 
 RM       := rm -f
@@ -36,10 +38,8 @@ OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
-$(NAME): libft.a libmlx.a $(OBJ_DIR) $(OBJS)
-	@if [ ! -f ./so_long ]; then \
-		echo "Build $(NAME) program."; \
-	fi
+$(NAME): $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx.a $(OBJ_DIR) $(OBJS)
+	@echo "Build $(NAME) program."
 	@$(CC) $(CFLAGS) $(MLXFLAGS) -L$(INC_DIR)/libftx -lft $(OBJS) -o $@
 
 $(OBJ_DIR):
@@ -47,10 +47,10 @@ $(OBJ_DIR):
 		mkdir -p $(OBJ_DIR); \
 	fi
 
-libft.a:
+$(LIBFT_DIR)/libft.a:
 	@(cd include/libftx ; make all)
 
-libmlx.a:
+$(MLX_DIR)/libmlx.a:
 	@(cd include/mlx ; make all)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
