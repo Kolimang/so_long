@@ -42,7 +42,11 @@ int	main(int argc, char *argv[])
 void	free_all(t_nfo *nfo)
 {
 	array_str_free(nfo->map->grid, array_str_len(nfo->map->grid));
-	free(nfo->mlx);
+	if(nfo->mlx)
+	{
+		free(nfo->mlx);
+		nfo->mlx = NULL;
+	}
 }
 
 int	on_destroy(t_nfo *nfo)
